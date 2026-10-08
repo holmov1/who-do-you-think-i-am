@@ -511,6 +511,18 @@ em { font-style: italic; }
 .cue-card-label { font-variant-caps: all-small-caps; letter-spacing: 0.14em; color: var(--gilt); font-size: 0.98rem; }
 .cue-card-text { font-family: var(--serif-display); font-style: italic; font-size: 1.35rem; line-height: 1.35; }
 .cue-card-source { color: var(--ink-faint); font-size: 0.9rem; }
+/* A short multi-turn conversation inside a card. */
+.cue-convo { display: flex; flex-direction: column; gap: 0.45rem; font-size: 1.12rem; }
+.cue-convo .cc-role {
+  display: block;
+  font-family: var(--serif-text);
+  font-style: normal;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.14em;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+}
+.cue-convo .cc-elided { font-family: var(--serif-text); font-size: 0.85rem; color: var(--ink-faint); padding-left: 1rem; }
 
 .cue-chart { display: grid; gap: 1.1rem; }
 .cue-legend { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
@@ -756,7 +768,8 @@ em { font-style: italic; }
 }
 .refusal-example .rx-steered .rx-role { color: #d0574a; }
 .refusal-example .rx-list { display: block; margin-top: 0.25rem; }
-.redacted { color: var(--ink-light); background: var(--ink-light); letter-spacing: -0.12em; user-select: none; }
+.redacted { color: var(--ink-light); background: var(--ink-light); letter-spacing: -0.12em; user-select: none; word-break: break-all; }
+.refusal-charts > * { min-width: 0; }
 .refusal-example figcaption { color: var(--ink-muted); font-size: 0.98rem; line-height: 1.5; }
 
 /* A body passage under a chapter head: same column, less space above. */
@@ -823,6 +836,13 @@ footer {
 
 @media (max-width: 860px) {
   body { font-size: 1.1rem; }
+  /* Essay beside a plate, and the two example cards: stacked. */
+  .essay-with-plate { grid-template-columns: 1fr; gap: 2.5rem; padding: 0 1rem; }
+  .essay-with-plate .painting { max-width: 26rem; }
+  .cue-demo { padding: 1.4rem 1.1rem 1.6rem; margin-top: 3rem; }
+  .cue-cards { grid-template-columns: 1fr; gap: 1rem; }
+  .cue-group { grid-template-columns: 6.5rem 1fr; gap: 0.6rem; }
+  .cue-legend { gap: 0.6rem 1.4rem; }
   .refusal-charts { grid-template-columns: 1fr; }
   .title-page { flex-direction: column; gap: 2.5rem; padding-top: 3rem; }
   .title-plate { flex-basis: auto; width: min(100%, 22rem); }

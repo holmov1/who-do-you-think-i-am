@@ -8,7 +8,7 @@
 
   const svg = document.getElementById("rw-diagram");
   if (!svg || !window.DiagramKit) return;
-  const { el, text, arrow, arrowhead, card, figure, math, htmlBox, userVector, scrolly } = window.DiagramKit;
+  const { el, text, arrow, arrowhead, card, figure, math, htmlBox, zoomer, scrolly } = window.DiagramKit;
 
   // A vertical stack of cells standing for a vector (hidden state or v_user).
   function column(parent, x, y, n, h, cls) {
@@ -248,11 +248,22 @@
     8: ["writeEval"],
   };
 
+  // Phone views (5:4): the beliefs card when reading, the edit and the
+  // written answer when writing, the charts of the evaluation plates.
+  const zoom = zoomer(svg);
+  const PHONE_VIEWS = {
+    read: [757, 36, 760, 608],
+    readEval: [310, 120, 880, 704],
+    write: [740, 20, 760, 608],
+    writeEval: [310, 120, 880, 704],
+  };
+
   showCase(0);
   showExample("hotel");
   scrolly("ch3-rw-scrolly", n => {
     const [scene, show] = STEPS[n];
     svg.setAttribute("data-scene", scene);
+    zoom(PHONE_VIEWS[scene]);
     if (show) show();
   });
 })();

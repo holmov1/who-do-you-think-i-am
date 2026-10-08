@@ -74,6 +74,37 @@
     for (let i = 0; i < 8; i++) el("rect", { x: x + i * 10.5, y, width: 9, height: 26, class: "d-vcell" }, g);
     return g;
   }
+  // On phones a diagram zooms to the part each step talks about, like the
+  // map in Chapter I. Views are [x, y, w, h] in the diagram's own units, all
+  // with the same 5:4 shape so the figure keeps its height while it moves.
+  // On wider screens the full diagram is shown.
+  const phone = window.matchMedia("(max-width: 860px)");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function zoomer(svg) {
+    const full = svg.getAttribute("viewBox").split(" ").map(Number);
+    let current = full.slice(), frame = null, target = full;
+    function apply(v) {
+      current = v;
+      svg.setAttribute("viewBox", v.map(x => x.toFixed(1)).join(" "));
+    }
+    function go(view) {
+      target = phone.matches && view ? view : full;
+      cancelAnimationFrame(frame);
+      if (reduceMotion) { apply(target); return; }
+      const from = current.slice(), t0 = performance.now(), dur = 750;
+      const tick = now => {
+        const k = Math.min(1, (now - t0) / dur);
+        const e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        apply(from.map((f, i) => f + (target[i] - f) * e));
+        if (k < 1) frame = requestAnimationFrame(tick);
+      };
+      frame = requestAnimationFrame(tick);
+    }
+    let last = null;
+    phone.addEventListener("change", () => go(last));
+    return view => { last = view; go(view); };
+  }
+
   // Pinned scrollytelling: invisible triggers behind a sticky stage set the
   // step. A note covers the steps in its data-steps (or its single
   // data-step), so several examples can share one note. Numeral i jumps to
@@ -129,5 +160,5 @@
     });
   }
 
-  window.DiagramKit = { el, text, arrow, arrowhead, card, figure, math, htmlBox, userVector, scrolly };
+  window.DiagramKit = { el, text, arrow, arrowhead, card, figure, math, htmlBox, userVector, zoomer, scrolly };
 })();
