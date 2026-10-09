@@ -419,6 +419,11 @@ em { font-style: italic; }
 
 /* ─── Chapter II: essay beside a painting plate ────── */
 
+/* The heading sits in the essay column, so heading and text form one block
+   centred beside the plate. */
+#chapter-2 { padding-top: 7rem; }
+#chapter-2 .ch2-head { max-width: none; margin: 0; padding: 0 0 0.5rem; }
+
 .essay-with-plate {
   max-width: 78rem;
   margin: 0 auto;
