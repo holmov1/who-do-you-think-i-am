@@ -7,8 +7,8 @@
   <meta name="description" content="An essay on the beliefs language models form about their users, accompanying the preprint User Model Extraction via Belief Self-Distillation.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=56">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=73">
 </head>
 <body>
 
@@ -16,25 +16,24 @@
 
   <!-- ─── Title page ─────────────────────────────── -->
   <header class="title-page">
-    <figure class="title-plate">
-      <div class="painting-frame">
-        <img src="assets/lavater-machine.jpg" alt="Engraving: a woman sits in a chair fitted with a screen; a candle throws her profile onto the screen, where a man behind it traces the outline." width="376" height="346">
+    <a class="author-link" href="https://holmov1.github.io">Author</a>
+    <div class="title-main">
+      <figure class="title-plate">
+        <div class="painting-frame">
+          <img src="assets/lavater-machine.jpg" alt="Engraving: a woman sits in a chair fitted with a screen; a candle throws her profile onto the screen, where a man behind it traces the outline." width="376" height="346">
+        </div>
+        <figcaption>J. C. Lavater, <em>Machine for taking silhouettes</em>, c. 1783</figcaption>
+      </figure>
+      <div class="title-text">
+        <span class="kicker">A visual essay on user models</span>
+        <h1>Who do you think<br><em>I</em>&nbsp;am?</h1>
+        <p class="subtitle">Language models form beliefs about the people they talk to.<br class="sub-break"> On finding those beliefs, and on what changes when we can rewrite&nbsp;them.</p>
+        <nav class="title-links" aria-label="Paper links">
+          <span>Based on</span>
+          <a href="https://arxiv.org/abs/2609.31603">Preprint</a>
+          <a href="https://github.com/holmov1/bsd-user-models">Code</a>
+        </nav>
       </div>
-      <figcaption>J. C. Lavater, <em>Machine for taking silhouettes</em>, c. 1783</figcaption>
-    </figure>
-    <div class="title-text">
-    <span class="kicker">A visual essay on user models</span>
-    <h1>Who do you think<br><em>I</em>&nbsp;am?</h1>
-    <p class="subtitle">Language models form beliefs about the people they talk to. On finding those beliefs, and on what changes when we can rewrite them.</p>
-    <span class="ornament" aria-hidden="true"></span>
-    <p class="byline">
-      Ali Holmov
-      <span class="affil">Based on the preprint <a href="https://arxiv.org/abs/2609.31603"><em>User Model Extraction via Belief Self-Distillation</em></a> (Holmov, Huang, Bykov &amp; Akata, 2026), which has the full technical account.</span>
-    </p>
-    <nav class="title-links" aria-label="Paper links">
-      <a href="https://arxiv.org/abs/2609.31603">The preprint</a>
-      <a href="https://github.com/holmov1/bsd-user-models">Code</a>
-    </nav>
     </div>
   </header>
 
@@ -274,7 +273,7 @@
     <div class="chapter-head">
       <span class="numeral">IV</span>
       <span class="kicker">Reading and writing</span>
-      <h2 id="ch4-title">Using the <em>Vector</em></h2>
+      <h2 id="ch4-title">Read, then <em>Rewrite</em></h2>
       <div class="prose">
         <p>Training leaves us with two maps and nothing else: <em>A</em>, which turns the model’s hidden state into a user vector, and <em>B</em>, which writes a user vector back. The model itself is never touched. What we have built is an interface: a narrow, labelled window onto one part of the model’s internal state.</p>
         <p>That window opens both ways. Through <em>A</em> we can read what the model believes about a user who has told it nothing about themselves, attribute by attribute. Through <em>B</em> we can change one of those beliefs and watch what the model does next, with the conversation and the question left exactly as they were.</p>
@@ -307,7 +306,7 @@
           </article>
           <article class="note" data-steps="4">
             <span class="note-num">ii. How well it reads</span>
-            <p>This is measured on the whole held-out test set, not on single examples. Linear probes on <em>v</em><sub>user</sub> reach macro-F1 0.66–0.68 across all thirteen attributes; the same probes on random vectors reach 0.32.<sup class="cite">[<a href="#ref-11">11</a>]</sup></p>
+            <p>This is measured on the test set, not on single examples. Linear probes on <em>v</em><sub>user</sub> reach macro-F1 0.66–0.68 across all thirteen attributes; the same probes on random vectors reach 0.32.<sup class="cite">[<a href="#ref-11">11</a>]</sup></p>
             <p>The 128-dimensional bottleneck keeps almost everything a linear readout finds in the full hidden state.</p>
           </article>
           <article class="note" data-steps="5">
@@ -322,7 +321,7 @@
           </article>
           <article class="note" data-steps="8">
             <span class="note-num">v. How well it writes</span>
-            <p>Again over the full test set: all 86 attribute-value pairs, 50 conversations each. Steering through <em>v</em><sub>user</sub> flips the belief in 78% of cases for Llama-3.1-8B, 51% for Qwen3-8B and 44% for OLMo-3-7B; random directions of the same norm flip 13%, 27% and 15%.<sup class="cite">[<a href="#ref-11">11</a>]</sup></p>
+            <p>Again over the test set: all 86 attribute-value pairs, 50 conversations each. Steering through <em>v</em><sub>user</sub> flips the belief in 78% of cases for Llama-3.1-8B, 51% for Qwen3-8B and 44% for OLMo-3-7B; random directions of the same norm flip 13%, 27% and 15%.<sup class="cite">[<a href="#ref-11">11</a>]</sup></p>
             <p>The learned write map matters too: with a random orthonormal projector in place of <em>B</em>, steering is weaker in 85 of 86 attribute pairs for Llama.</p>
           </article>
           </div>
@@ -349,7 +348,7 @@
     <div class="chapter-head">
       <span class="numeral">V</span>
       <span class="kicker">Refusal and the user model</span>
-      <h2 id="ch5-title">Who is <em>Asking?</em></h2>
+      <h2 id="ch5-title">Same Request, <em>Different User</em></h2>
     </div>
 
     <div class="chapter-head chapter-body">
@@ -361,7 +360,7 @@
     </div>
 
     <div class="cue-demo refusal-demo">
-      <span class="kicker">Same request, a different user</span>
+      <span class="kicker">Refusal under steering</span>
       <div class="refusal-charts">
         <figure class="refusal-chart">
           <svg id="refusal-steer" viewBox="0 0 600 460" role="img" aria-label="Refusal rate on StrongREJECT, Llama-3.1-8B: unsteered 98%, perceived intent written as benign 62%, perceived gender changed 87%, random direction 87%."></svg>
@@ -454,12 +453,12 @@
   Holmov, Huang, Bykov &amp; Akata · <a href="https://arxiv.org/abs/2609.31603">arXiv:2609.31603</a> · 2026
 </footer>
 
-<script src="js/places.js?v=56"></script>
-<script src="js/map.js?v=56"></script>
-<script src="js/ch2-labels.js?v=56"></script>
-<script src="js/diagram-kit.js?v=56"></script>
-<script src="js/ch3-method.js?v=56"></script>
-<script src="js/ch3-readwrite.js?v=56"></script>
-<script src="js/ch5-refusal.js?v=56"></script>
+<script src="js/places.js?v=73"></script>
+<script src="js/map.js?v=73"></script>
+<script src="js/ch2-labels.js?v=73"></script>
+<script src="js/diagram-kit.js?v=73"></script>
+<script src="js/ch3-method.js?v=73"></script>
+<script src="js/ch3-readwrite.js?v=73"></script>
+<script src="js/ch5-refusal.js?v=73"></script>
 </body>
 </html>

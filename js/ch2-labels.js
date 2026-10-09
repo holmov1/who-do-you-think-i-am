@@ -54,15 +54,6 @@
   axis.querySelector(".cue-chance-label").style.left = `${CHANCE * 100}%`;
   chart.appendChild(axis);
 
-  // Grow the bars when the chart scrolls into view.
-  const fills = Array.from(chart.querySelectorAll(".cue-bar"));
-  const grow = () => fills.forEach(f => { f.style.width = `${f.dataset.value * 100}%`; });
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver(entries => {
-      if (entries.some(e => e.isIntersecting)) { grow(); io.disconnect(); }
-    }, { threshold: 0.3 });
-    io.observe(chart);
-  } else {
-    grow();
-  }
+  // Bars are drawn at their final width; no animation.
+  chart.querySelectorAll(".cue-bar").forEach(f => { f.style.width = `${f.dataset.value * 100}%`; });
 })();

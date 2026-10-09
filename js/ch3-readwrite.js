@@ -129,9 +129,9 @@
     });
   }
 
-  evaluation("r-eval", "Evaluation · held-out test set", [
+  evaluation("r-eval", "Evaluation · test set", [
     "Linear probes on the user vector against probes on random vectors",
-    "Macro-F1 over all 13 attributes, every conversation in the test split",
+    "Macro-F1 over all 13 attributes, every conversation in the test set",
   ], [
     { model: "Llama-3.1-8B", v: 0.67, rand: 0.32 },
     { model: "Qwen3-8B", v: 0.68, rand: 0.32 },
@@ -181,7 +181,7 @@
   const steeredHead = text(write, 782, 332, "", "d-heading d-heading-steered");
   const steeredBox = htmlBox(write, 782, 350, 656, 280, "fo-answer is-steered");
 
-  evaluation("w-eval", "Evaluation · full test set", [
+  evaluation("w-eval", "Evaluation · test set", [
     "Steering through the user vector against a random direction of the same norm",
     "Flip rate over all 86 attribute-value pairs, 50 test conversations each (4,300 interventions per model)",
   ], [

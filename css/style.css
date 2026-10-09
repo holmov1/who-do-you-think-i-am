@@ -17,10 +17,12 @@
   --paper-wash: #d8c8a4;    /* ochre wash for a highlighted province */
   --sea-line: rgba(58, 46, 34, 0.22);
 
-  --serif-display: "Cormorant Garamond", "EB Garamond", Georgia, serif;
-  --serif-text: "EB Garamond", Georgia, serif;
+  /* Three text styles only: titles (Cormorant), text (Caslon), labels
+     (Caslon capitals, spaced). */
+  --serif-display: "Cormorant Garamond", Georgia, serif;
+  --serif-text: "Libre Caslon Text", Georgia, serif;
 
-  --measure: 36rem;
+  --measure: 44rem;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,8 +33,8 @@ body {
   background: var(--wall);
   color: var(--ink-light);
   font-family: var(--serif-text);
-  font-size: 1.1875rem;
-  line-height: 1.6;
+  font-size: 1.06rem;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -51,26 +53,31 @@ em { font-style: italic; }
 /* ─── Title page ───────────────────────────────────── */
 
 .title-page {
+  position: relative;
   min-height: 88vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4.5rem;
+  max-width: 76rem;
+  margin: 0 auto;
   padding: 6rem 2rem 4rem;
-  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3.5rem;
 }
 
-/* The engraving beside the title. */
-.title-plate { flex: 0 1 26rem; margin: 0; }
-.title-plate figcaption {
-  margin-top: 0.7rem;
-  font-size: 0.9rem;
-  color: var(--ink-faint);
+/* Engraving and headline side by side; the frame spans the headline block
+   from the kicker to the last line of the subtitle. */
+.title-main {
+  display: grid;
+  grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
+  gap: 4.5rem;
+  align-items: stretch;
 }
+.title-plate { margin: 0; display: flex; flex-direction: column; }
+.title-plate figcaption { margin-top: 0.6rem; font-size: 0.85rem; line-height: 1.4; color: var(--ink-faint); }
+.title-plate .painting-frame { flex: 1; display: flex; }
+.title-plate img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-.title-text { flex: 0 1 44rem; }
-.title-text .subtitle { max-width: 36rem; }
-
+.title-text { display: flex; flex-direction: column; justify-content: center; }
 .title-page .kicker { margin-bottom: 1.6rem; display: block; }
 
 .title-page h1 {
@@ -80,7 +87,6 @@ em { font-style: italic; }
   line-height: 0.98;
   letter-spacing: -0.01em;
 }
-
 .title-page h1 em {
   color: var(--accent);
   font-weight: 500;
@@ -88,41 +94,26 @@ em { font-style: italic; }
 
 .title-page .subtitle {
   margin: 1.8rem 0 0;
-  max-width: 34rem;
-  font-size: 1.3rem;
-  font-style: italic;
+  max-width: 44rem;
+  font-size: 1.15rem;
   color: var(--ink-muted);
 }
+/* No single-word last lines in running text. */
+.prose p, .note p, .end-matter p { text-wrap: pretty; }
 
-.ornament {
-  display: block;
-  margin: 2.2rem 0;
-  width: 7rem;
-  height: 1px;
-  background: var(--gilt);
-  position: relative;
-}
-.ornament::after {
-  content: "";
-  position: absolute;
-  left: 50%; top: 50%;
-  width: 7px; height: 7px;
-  background: var(--wall);
-  border: 1px solid var(--gilt);
-  transform: translate(-50%, -50%) rotate(45deg);
-}
+/* Link to the author's page, top right of the title page. */
+.author-link { position: absolute; top: 2rem; right: 2rem; text-decoration: none; border-bottom: 1px solid var(--gilt); padding-bottom: 3px; }
+.author-link:hover { color: var(--ink-light); border-color: var(--ink-light); }
 
-.byline { font-size: 1.05rem; color: var(--ink-light); }
-.byline .affil { display: block; color: var(--ink-muted); font-size: 0.95rem; margin-top: 0.35rem; max-width: 34rem; line-height: 1.5; }
-
+/* "Based on: Preprint · Code", under the subtitle, in the label style. */
 .title-links {
-  margin-top: 1.6rem;
+  margin-top: 2.2rem;
   display: flex;
-  gap: 1.8rem;
-  font-variant-caps: all-small-caps;
-  letter-spacing: 0.14em;
+  align-items: baseline;
+  gap: 1.6rem;
 }
-.title-links a { text-decoration: none; border-bottom: 1px solid var(--gilt); padding-bottom: 2px; }
+.title-links a { color: var(--gilt); text-decoration: none; border-bottom: 1px solid var(--gilt); padding-bottom: 3px; }
+.title-links a:hover { color: var(--ink-light); border-color: var(--ink-light); }
 
 /* ─── Chapter opening ──────────────────────────────── */
 
@@ -152,14 +143,6 @@ em { font-style: italic; }
 .chapter-head h2 em { color: var(--accent); }
 
 .prose p { margin-bottom: 1.1rem; }
-.prose p:first-of-type::first-letter {
-  font-family: var(--serif-display);
-  float: left;
-  font-size: 4.1em;
-  line-height: 0.8;
-  padding: 0.08em 0.1em 0 0;
-  color: var(--gilt);
-}
 
 /* ─── Scrollytelling: the map ──────────────────────── */
 /* A pinned stage: the map takes ~65% of the screen height at full width,
@@ -231,7 +214,7 @@ em { font-style: italic; }
   background: none;
   border: 0;
   color: var(--ink-faint);
-  font-family: var(--serif-display);
+  font-family: var(--serif-text);
   font-size: 1.2rem;
   letter-spacing: 0.1em;
   text-align: left;
@@ -269,7 +252,7 @@ em { font-style: italic; }
   font-size: 1.15rem;
   margin-bottom: 0.45rem;
 }
-.note p { font-size: 1.22rem; line-height: 1.55; color: #f1ead9; }
+.note p { font-size: 1.06rem; line-height: 1.65; color: #f1ead9; }
 
 .triggers {
   position: relative;
@@ -290,15 +273,15 @@ em { font-style: italic; }
 
 .map .region-name {
   fill: var(--paper-ink);
-  font-family: var(--serif-display);
-  font-style: italic;
-  letter-spacing: 0.22em;
-  font-size: 23px;
+  font-family: var(--serif-text);
+  font-style: normal;
+  letter-spacing: 0.16em;
+  font-size: 18px;
 }
 .map .region-sub {
   fill: rgba(58, 46, 34, 0.75);
-  font-style: italic;
-  font-size: 17px;
+  font-style: normal;
+  font-size: 13.5px;
   letter-spacing: 0.03em;
 }
 
@@ -309,13 +292,13 @@ em { font-style: italic; }
 .map .place .dot-inner { fill: var(--paper-ink); }
 .map .place text {
   fill: var(--paper-ink);
-  font-size: 19px;
+  font-size: 15.5px;
   paint-order: stroke;
   stroke: var(--paper);
   stroke-width: 4px;
   stroke-linejoin: round;
 }
-.map .place .year { font-size: 15px; fill: rgba(58, 46, 34, 0.7); }
+.map .place .year { font-size: 12.5px; fill: rgba(58, 46, 34, 0.7); }
 .map .place:hover .dot-outer,
 .map .place:focus .dot-outer,
 .map .place.is-open .dot-outer { fill: var(--accent); stroke: var(--accent); }
@@ -327,9 +310,9 @@ em { font-style: italic; }
 
 .map .strait-label {
   fill: rgba(58, 46, 34, 0.8);
-  font-family: var(--serif-display);
-  font-style: italic;
-  font-size: 23px;
+  font-family: var(--serif-text);
+  font-style: normal;
+  font-size: 19px;
   letter-spacing: 0.06em;
 }
 
@@ -340,8 +323,8 @@ em { font-style: italic; }
 .map .bridge-bsd .planks line { stroke: var(--accent); }
 .map .bridge-name .bridge-label {
   fill: var(--accent);
-  font-family: var(--serif-display);
-  font-size: 24px;
+  font-family: var(--serif-text);
+  font-size: 19px;
   font-style: italic;
   font-weight: 500;
   stroke: var(--paper);
@@ -356,7 +339,7 @@ em { font-style: italic; }
 .map .cartouche .c-title { font-family: var(--serif-display); font-size: 27px; fill: var(--paper-ink); letter-spacing: 0.12em; }
 
 .map .compass path, .map .compass circle { stroke: var(--paper-ink); }
-.map .compass text { font-family: var(--serif-display); font-size: 18px; fill: var(--paper-ink); }
+.map .compass text { font-family: var(--serif-text); font-size: 18px; fill: var(--paper-ink); }
 
 /* Step states. The SVG gets data-step="0..6":
    1–2 the bias island, 3 the persona island, 4 the strait,
@@ -437,11 +420,11 @@ em { font-style: italic; }
 /* ─── Chapter II: essay beside a painting plate ────── */
 
 .essay-with-plate {
-  max-width: 72rem;
+  max-width: 78rem;
   margin: 0 auto;
   padding: 0 2rem;
   display: grid;
-  grid-template-columns: minmax(0, 36rem) minmax(0, 26rem);
+  grid-template-columns: minmax(0, 44rem) minmax(0, 26rem);
   gap: 4rem;
   justify-content: center;
   align-items: start;
@@ -509,7 +492,7 @@ em { font-style: italic; }
   border: 1px solid var(--rule);
 }
 .cue-card-label { font-variant-caps: all-small-caps; letter-spacing: 0.14em; color: var(--gilt); font-size: 0.98rem; }
-.cue-card-text { font-family: var(--serif-display); font-style: italic; font-size: 1.35rem; line-height: 1.35; }
+.cue-card-text { font-family: var(--serif-text); font-style: normal; font-size: 1.06rem; line-height: 1.35; }
 .cue-card-source { color: var(--ink-faint); font-size: 0.9rem; }
 /* A short multi-turn conversation inside a card. */
 .cue-convo { display: flex; flex-direction: column; gap: 0.45rem; font-size: 1.12rem; }
@@ -537,7 +520,7 @@ em { font-style: italic; }
   gap: 1rem;
   align-items: center;
 }
-.cue-group-label { font-family: var(--serif-display); font-size: 1.15rem; }
+.cue-group-label { font-family: var(--serif-text); font-size: 1.15rem; }
 .cue-group-bars { display: grid; gap: 0.35rem; }
 .cue-row {
   display: grid;
@@ -554,7 +537,6 @@ em { font-style: italic; }
   position: absolute;
   left: 0; top: 0; bottom: 0;
   width: 0;
-  transition: width 1.1s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .cue-row-cue .cue-bar { background: var(--accent); }
 .cue-row-belief .cue-bar { background: var(--gilt); }
@@ -563,14 +545,14 @@ em { font-style: italic; }
   top: -0.25rem; bottom: -0.25rem;
   border-left: 1px dashed var(--ink-muted);
 }
-.cue-value { font-family: var(--serif-display); font-size: 1.25rem; text-align: right; }
+.cue-value { font-family: var(--serif-text); font-size: 1.05rem; text-align: right; }
 .cue-axis .cue-track { background: none; height: 1.1rem; }
 .cue-chance-label {
   position: absolute;
   transform: translateX(-50%);
   font-size: 0.85rem;
   color: var(--ink-muted);
-  font-style: italic;
+  font-style: normal;
   white-space: nowrap;
 }
 
@@ -601,7 +583,7 @@ em { font-style: italic; }
 /* Before step i: stacked just behind the original, offset like paper. */
 .diagram .ghost-top { transform: translate(10px, 190px); }
 .diagram .ghost-bottom { transform: translate(-10px, -190px); }
-.diagram .d-title { fill: var(--accent); font-size: 20px; letter-spacing: 0.24em; }
+.diagram .d-title { fill: var(--accent); font-size: 20px; letter-spacing: 0.18em; }
 .diagram .ghost-arrows { opacity: 0; transition: opacity 0.6s ease 0.6s; }
 .diagram[data-step="1"] .ghost { transform: none; }
 .diagram[data-step="1"] .ghost-arrows { opacity: 1; }
@@ -610,21 +592,21 @@ em { font-style: italic; }
 .diagram .d-card-inner { fill: none; stroke: var(--paper-ink); stroke-width: 0.5; }
 .diagram .d-heading { fill: var(--paper-ink); font-size: 15px; letter-spacing: 0.18em; }
 .diagram .d-group { fill: var(--accent); font-size: 14px; letter-spacing: 0.18em; }
-.diagram .d-quote { fill: var(--paper-ink); font-family: var(--serif-display); font-style: italic; font-size: 24px; }
-.diagram .d-question { fill: var(--paper-ink); font-size: 22px; }
-.diagram .d-option { fill: var(--paper-ink); font-size: 19px; font-style: italic; }
-.diagram .d-note { fill: rgba(58, 46, 34, 0.75); font-size: 16px; font-style: italic; }
+.diagram .d-quote { fill: var(--paper-ink); font-family: var(--serif-text); font-style: normal; font-size: 20px; }
+.diagram .d-question { fill: var(--paper-ink); font-size: 20px; }
+.diagram .d-option { fill: var(--paper-ink); font-size: 17px; font-style: normal; }
+.diagram .d-note { fill: rgba(58, 46, 34, 0.75); font-size: 15px; font-style: normal; }
 
 .diagram .d-model { fill: var(--paper-wash); stroke: var(--paper-ink); stroke-width: 1.6; }
 .diagram .d-model-inner { fill: none; stroke: var(--paper-ink); stroke-width: 0.6; }
 .diagram .d-model-name { fill: var(--paper-ink); font-family: var(--serif-display); font-size: 27px; font-weight: 500; letter-spacing: 0.04em; }
-.diagram .d-model-role { fill: var(--paper-ink); font-size: 16px; font-style: italic; }
-.diagram .d-frozen { fill: rgba(58, 46, 34, 0.6); font-size: 13px; letter-spacing: 0.2em; }
+.diagram .d-model-role { fill: var(--paper-ink); font-size: 15px; font-style: normal; }
+.diagram .d-frozen { fill: rgba(58, 46, 34, 0.6); font-size: 13px; letter-spacing: 0.18em; }
 
 .diagram .d-arrow { stroke: var(--paper-ink); stroke-width: 1.4; }
 .diagram .d-arrowhead { fill: var(--paper-ink); }
 
-.diagram .d-bar-label { fill: var(--paper-ink); font-size: 18px; }
+.diagram .d-bar-label { fill: var(--paper-ink); font-size: 17px; }
 .diagram .d-bar-track { fill: rgba(58, 46, 34, 0.08); }
 .diagram .d-bar {
   fill: var(--paper-ink);
@@ -635,14 +617,14 @@ em { font-style: italic; }
 
 .diagram .d-cell { fill: rgba(58, 46, 34, 0.55); }
 .diagram .d-map { fill: rgba(58, 46, 34, 0.12); stroke: var(--paper-ink); stroke-width: 1.2; }
-.diagram .d-map-label { fill: var(--paper-ink); font-size: 18px; font-style: italic; }
-.diagram .d-dim { fill: var(--paper-ink); font-size: 16px; }
-.diagram .d-math { fill: var(--paper-ink); font-family: var(--serif-display); font-style: italic; font-size: 21px; }
+.diagram .d-map-label { fill: var(--paper-ink); font-size: 17px; font-style: normal; }
+.diagram .d-dim { fill: var(--paper-ink); font-size: 15px; }
+.diagram .d-math { fill: var(--paper-ink); font-family: var(--serif-text); font-style: italic; font-size: 21px; }
 .diagram .d-script { font-size: 68%; }
 .diagram .d-bb { font-family: "STIX Two Math", "STIXGeneral", "Cambria Math", "Noto Sans Math", serif; font-style: normal; }
 .note sub, .note sup { font-size: 0.7em; line-height: 0; }
 .diagram .d-vcell { fill: var(--paper-ink); transition: fill 0.6s ease, transform 0.6s ease; }
-.diagram .d-vector-label { fill: var(--accent); font-family: var(--serif-display); font-style: italic; font-size: 22px; opacity: 0; transition: opacity 0.6s ease; }
+.diagram .d-vector-label { fill: var(--accent); font-family: var(--serif-text); font-style: normal; font-size: 17px; opacity: 0; transition: opacity 0.6s ease; }
 .diagram[data-step="6"] .m-channel .d-vcell { fill: var(--accent); }
 .diagram[data-step="6"] .d-vector-label,
 .diagram .d-vector-label.is-on { opacity: 1; }
@@ -654,18 +636,18 @@ em { font-style: italic; }
 /* Teaching signal: belief and answer joined directly. */
 .diagram .d-match { stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 6 5; }
 .diagram .d-match-head { fill: var(--accent); }
-.diagram .d-match-label { fill: var(--accent); font-family: var(--serif-display); font-style: italic; font-size: 21px; }
+.diagram .d-match-label { fill: var(--accent); font-family: var(--serif-text); font-style: normal; font-size: 17px; }
 
 /* Reading */
-.diagram .d-belief { fill: var(--paper-ink); font-family: var(--serif-display); font-style: italic; font-size: 22px; }
+.diagram .d-belief { fill: var(--paper-ink); font-family: var(--serif-text); font-style: normal; font-size: 20px; }
 .diagram .d-rule { stroke: rgba(58, 46, 34, 0.18); stroke-width: 1; }
 
 /* Writing */
-.diagram .fo-prompt { font-family: var(--serif-text); font-style: italic; font-size: 21px; line-height: 1.4; color: var(--paper-ink); }
-.diagram .fo-answer { font-family: var(--serif-display); font-size: 26px; line-height: 1.38; color: var(--paper-ink); }
+.diagram .fo-prompt { font-family: var(--serif-text); font-style: normal; font-size: 18px; line-height: 1.4; color: var(--paper-ink); }
+.diagram .fo-answer { font-family: var(--serif-text); font-size: 20px; line-height: 1.5; color: var(--paper-ink); }
 .diagram .fo-answer mark { background: none; color: var(--paper-ink); font-weight: 600; }
 .diagram .fo-answer.is-steered mark { color: var(--accent); }
-.diagram .d-tag { fill: var(--paper-ink); font-size: 17px; letter-spacing: 0.12em; }
+.diagram .d-tag { fill: var(--paper-ink); font-size: 17px; letter-spacing: 0.18em; }
 .diagram .d-tag.is-steered { fill: var(--accent); }
 
 /* ─── Chapter III: reading and writing pane ────────── */
@@ -681,9 +663,9 @@ em { font-style: italic; }
 .diagram .d-card.d-card-steered { stroke-width: 1.8; }
 .diagram .d-heading-steered { fill: var(--accent); }
 .diagram .fo-prompt .fo-role-inline { font-style: normal; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; margin-right: 0.6em; color: rgba(58, 46, 34, 0.75); }
-.diagram .d-case { fill: rgba(58, 46, 34, 0.6); font-size: 14px; font-style: italic; letter-spacing: 0.04em; }
-.diagram .d-eval-title { fill: var(--accent); font-size: 22px; letter-spacing: 0.24em; }
-.diagram .d-eval-sub { fill: var(--paper-ink); font-family: var(--serif-display); font-style: italic; font-size: 21px; }
+.diagram .d-case { fill: rgba(58, 46, 34, 0.6); font-size: 15px; font-style: normal; letter-spacing: 0.04em; }
+.diagram .d-eval-title { fill: var(--accent); font-size: 22px; letter-spacing: 0.18em; }
+.diagram .d-eval-sub { fill: var(--paper-ink); font-family: var(--serif-text); font-style: normal; font-size: 17px; }
 
 .diagram .d-cell-v { fill: rgba(58, 46, 34, 0.55); }
 .diagram .d-vuser .d-cell-v,
@@ -691,7 +673,7 @@ em { font-style: italic; }
 .diagram .d-cover { fill: var(--paper); }
 .diagram .d-arrow-path { fill: none; stroke: var(--paper-ink); stroke-width: 1.4; }
 
-.diagram .fo-conv { font-family: var(--serif-text); font-size: 20px; line-height: 1.42; color: var(--paper-ink); }
+.diagram .fo-conv { font-family: var(--serif-text); font-size: 18px; line-height: 1.42; color: var(--paper-ink); }
 .diagram .fo-conv p { margin: 0 0 0.55em; }
 .diagram .fo-conv .fo-role { display: block; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(58, 46, 34, 0.7); }
 .diagram .fo-conv mark { background: rgba(168, 56, 44, 0.16); color: var(--accent); padding: 0 2px; }
@@ -701,7 +683,7 @@ em { font-style: italic; }
 .diagram .d-belief-row.is-focus .d-belief,
 .diagram .d-belief-row.is-focus .d-bar-label { fill: var(--accent); }
 
-.diagram .d-edit-line { fill: var(--paper-ink); font-family: var(--serif-display); font-style: italic; font-size: 25px; }
+.diagram .d-edit-line { fill: var(--paper-ink); font-family: var(--serif-text); font-style: normal; font-size: 20px; }
 .diagram .d-edit-from { fill: rgba(58, 46, 34, 0.7); text-decoration: line-through; }
 .diagram .d-edit-to { fill: var(--accent); }
 .diagram .d-arrow-red { stroke: var(--accent); }
@@ -712,8 +694,8 @@ em { font-style: italic; }
 .diagram .d-axis { stroke: var(--paper-ink); stroke-width: 1; }
 .diagram .d-col-v { fill: var(--accent); }
 .diagram .d-col-r { fill: rgba(58, 46, 34, 0.3); }
-.diagram .d-col-value { fill: var(--paper-ink); font-family: var(--serif-display); font-size: 22px; }
-.diagram .d-legend { fill: var(--paper-ink); font-size: 16px; }
+.diagram .d-col-value { fill: var(--paper-ink); font-family: var(--serif-text); font-size: 19px; }
+.diagram .d-legend { fill: var(--paper-ink); font-size: 15px; }
 
 /* Ten steps: the step numerals run in a row above the note. */
 :is(#ch3-scrolly, #ch3-rw-scrolly) .notes { grid-template-columns: 1fr; gap: 0.5rem; }
@@ -721,8 +703,7 @@ em { font-style: italic; }
 
 /* "Beyond the user": a short essay coda, no drop cap. */
 .chapter-head.beyond { padding-top: 5rem; }
-.chapter-head.beyond .prose p:first-of-type::first-letter { float: none; font-size: inherit; padding: 0; color: inherit; font-family: inherit; line-height: inherit; }
-
+.chapter-head.beyond 
 /* ─── Chapter V: refusal ───────────────────────────── */
 
 .refusal-demo { max-width: 72rem; }
@@ -740,7 +721,7 @@ em { font-style: italic; }
 .refusal-chart .c-grid { stroke: rgba(233, 224, 205, 0.08); }
 .refusal-chart .c-axis { stroke: rgba(233, 224, 205, 0.45); }
 .refusal-chart .c-tick { fill: var(--ink-muted); font-size: 16px; }
-.refusal-chart .c-label { fill: var(--ink-muted); font-size: 17px; font-style: italic; }
+.refusal-chart .c-label { fill: var(--ink-muted); font-size: 17px; font-style: normal; }
 .refusal-chart .c-threshold { stroke: var(--ink-muted); stroke-dasharray: 5 5; }
 .refusal-chart .c-row-label { fill: var(--ink-light); font-size: 18px; }
 
@@ -750,8 +731,8 @@ em { font-style: italic; }
   background: var(--wall);
   border: 1px solid var(--rule);
   padding: 0.9rem 1.1rem 1rem;
-  font-family: var(--serif-display);
-  font-size: 1.28rem;
+  font-family: var(--serif-text);
+  font-size: 1.04rem;
   line-height: 1.45;
 }
 .refusal-example .rx-ask { font-style: italic; }
@@ -777,12 +758,12 @@ em { font-style: italic; }
 .refusal-chart .c-bar-base { fill: rgba(233, 224, 205, 0.55); }
 .refusal-chart .c-bar-intent { fill: var(--accent); }
 .refusal-chart .c-bar-other { fill: var(--gilt); }
-.refusal-chart .c-value { fill: var(--ink-light); font-family: var(--serif-display); font-size: 22px; paint-order: stroke; stroke: var(--wall-2); stroke-width: 7px; stroke-linejoin: round; }
+.refusal-chart .c-value { fill: var(--ink-light); font-family: var(--serif-text); font-size: 19px; paint-order: stroke; stroke: var(--wall-2); stroke-width: 7px; stroke-linejoin: round; }
 
 /* ─── End matter: conclusion, follow-up, use of AI ─── */
 
 .end-matter {
-  max-width: 46rem;
+  max-width: var(--measure);
   margin: 0 auto;
   padding: 3rem 1rem 1rem;
   border-top: 1px solid var(--rule);
@@ -795,8 +776,7 @@ em { font-style: italic; }
   margin-bottom: 1rem;
 }
 .end-matter p { font-size: 1.08rem; line-height: 1.6; margin-bottom: 1rem; }
-.tbc { color: var(--ink-faint); font-style: italic; }
-.prose p.tbc::first-letter { float: none; font-size: inherit; padding: 0; color: inherit; font-family: inherit; line-height: inherit; }
+.tbc { color: var(--ink-faint); font-style: normal; }
 
 /* ─── Citations and references ────────────────────── */
 
@@ -805,7 +785,7 @@ em { font-style: italic; }
 .cite a:hover { color: var(--ink-light); text-decoration: underline; }
 
 .references {
-  max-width: 46rem;
+  max-width: var(--measure);
   margin: 0 auto;
   padding: 2rem 1rem 6rem;
   border-top: 1px solid var(--rule);
@@ -832,6 +812,22 @@ footer {
   font-size: 0.92rem;
 }
 
+/* ─── Labels: the third and last text style ────────── */
+/* Every small heading, kicker, role and step name: Caslon capitals, spaced. */
+.kicker, .note-num, .step-num, .cue-card-label, .ml-artist, .title-links span, .title-links a, .author-link,
+.refusal-example .rx-role, .cue-convo .cc-role, .cue-controls-label, .cue-group-label {
+  font-family: var(--serif-text);
+  font-variant-caps: normal;
+  text-transform: uppercase;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--gilt);
+}
+.cue-group-label { color: var(--ink-light); }
+.refusal-example .rx-steered .rx-role { color: #d0574a; }
+
 /* ─── Narrow screens: same stage, the map fills the width ── */
 
 @media (max-width: 860px) {
@@ -844,8 +840,11 @@ footer {
   .cue-group { grid-template-columns: 6.5rem 1fr; gap: 0.6rem; }
   .cue-legend { gap: 0.6rem 1.4rem; }
   .refusal-charts { grid-template-columns: 1fr; }
-  .title-page { flex-direction: column; gap: 2.5rem; padding-top: 3rem; }
-  .title-plate { flex-basis: auto; width: min(100%, 22rem); }
+  .title-page { padding: 3rem 1rem 2rem; gap: 2rem; }
+  .title-main { grid-template-columns: 1fr; gap: 2.2rem; }
+  .title-plate { width: min(100%, 22rem); }
+  .title-plate img { height: auto; }
+  .sub-break { display: none; }
   .stage { padding: 1rem 1rem 1.5rem; justify-content: flex-start; gap: 1rem; }
   .plate { width: 100%; padding: 6px; }
   .notes { width: 100%; grid-template-columns: 1fr; gap: 0.6rem; }
