@@ -559,6 +559,17 @@ em { font-style: italic; }
 .cue-caption { margin-top: 1.2rem; color: var(--ink-muted); font-size: 1rem; line-height: 1.5; }
 .cue-caption strong { color: var(--ink-light); font-weight: 500; }
 
+/* ─── Static plates (introduction) ─────────────────── */
+.static-plate { max-width: 76rem; margin: 2.5rem auto 0; padding: 0 2rem; }
+.plate-caption { margin-top: 0.8rem; color: var(--ink-muted); font-size: 0.95rem; line-height: 1.5; }
+.static-plate + .chapter-head.chapter-body { padding-top: 3rem; }
+.diagram .d-silhouette { fill: var(--paper-ink); }
+.diagram .d-silhouette .d-silhouette-cut { fill: #efe6d2; }
+.diagram .d-model-small { font-size: 22px; }
+.diagram .d-answer-place { fill: var(--paper-ink); font-size: 24px; }
+.diagram .d-answer-stay { fill: rgba(58, 46, 34, 0.75); font-size: 19px; }
+.diagram .fo-prompt.fo-plain { font-style: normal; }
+
 /* ─── Chapter III: the method diagram ──────────────── */
 /* Method pane, data-step: 0–1 one model and its two copies · 2–6 the method. */
 
@@ -832,6 +843,7 @@ footer {
 
 @media (max-width: 860px) {
   body { font-size: 1.1rem; }
+  .static-plate { padding: 0 1rem; }
   /* Essay beside a plate, and the two example cards: stacked. */
   .essay-with-plate { grid-template-columns: 1fr; gap: 2.5rem; padding: 0 1rem; }
   .essay-with-plate .painting { max-width: 26rem; }
@@ -861,3 +873,6 @@ footer {
   .map .layer, .map .coast, .note, .place-card { transition: none; }
   .map .draw { transition: none; }
 }
+
+.credits { padding-bottom: 5rem; }
+.credits p { font-size: 0.95rem; color: var(--ink-muted); }

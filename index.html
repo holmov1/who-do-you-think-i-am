@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=73">
+  <link rel="stylesheet" href="css/style.css?v=85">
 </head>
 <body>
 
@@ -36,6 +36,34 @@
       </div>
     </div>
   </header>
+
+  <!-- ─── Introduction ────────────────────────────── -->
+  <section id="introduction" aria-labelledby="intro-title">
+
+    <div class="chapter-head">
+      <span class="kicker">Introduction</span>
+      <h2 id="intro-title">A Picture of the <em>User</em></h2>
+      <div class="prose">
+        <p>A language model answers not only what is asked, but also whom it believes is asking. Consider a request for a destination for a week away and a rough nightly hotel budget. Nothing in it states the user’s income, yet the answer depends on it: the same model may suggest a hotel by the sea in Greece or a hostel on Bali, depending on what it believes about the person asking.</p>
+        <p>Such beliefs are inferred from cues in the conversation: where the user lives, what they do for a living, a currency, a choice of words. Taken together, they form the model’s <em>user model</em>: its beliefs about the user’s background, state and intent. These beliefs need not be correct; they can be uncertain or stereotyped. They are also rarely stated. A model does not report that it has taken the user for a student or for an adversary; the inference shows only in the answer.</p>
+        <p>Because the user model is implicit, its effects are difficult to inspect. It can shape personalization, the quality of the answers different groups receive, and decisions that bear on safety, such as whether a request is refused. Studying it therefore requires access to the internal state in which the inference is held.</p>
+      </div>
+    </div>
+
+    <div class="static-plate">
+      <figure class="plate">
+        <svg class="diagram" id="intro-diagram" viewBox="0 0 1500 440" role="img" aria-label="Schematic: a user asks for a destination and a hotel budget. If the model believes the user has a middle income, it suggests a hotel by the sea in Santorini; if it believes a low income, a hostel on Bali."></svg>
+      </figure>
+      <p class="plate-caption">Schematic: the same request, answered under two beliefs about the user’s income.</p>
+    </div>
+
+    <div class="chapter-head chapter-body">
+      <div class="prose">
+        <p>This essay follows two questions. What does a model infer about users from natural conversations? And if that belief is changed, does the model’s behaviour change with it? The essay gives only the ideas I took from working on the paper; for the full technical account, please read the preprint <a href="https://arxiv.org/abs/2609.31603"><em>User Model Extraction via Belief Self-Distillation</em></a>.</p>
+      </div>
+    </div>
+
+  </section>
 
   <!-- ─── Chapter I ───────────────────────────────── -->
   <section id="chapter-1" aria-labelledby="ch1-title">
@@ -447,18 +475,24 @@
     </ol>
   </section>
 
+  <section class="end-matter credits" aria-labelledby="credits-title">
+    <h2 id="credits-title">Image Credits</h2>
+    <p>J. C. Lavater, <em>Machine sûre et commode pour tirer des silhouettes</em>, plate from <em>Essai sur la physiognomonie</em>, 1781–1803, public domain. Silhouette after B. A. Moll, 1783, via <a href="https://commons.wikimedia.org/wiki/File:Silhouette_historical_1.svg">Wikimedia Commons</a>, CC0. Greek temple and palm tree icons by Delapouite, <a href="https://game-icons.net">game-icons.net</a>, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+  </section>
+
 </main>
 
 <footer>
   Holmov, Huang, Bykov &amp; Akata · <a href="https://arxiv.org/abs/2609.31603">arXiv:2609.31603</a> · 2026
 </footer>
 
-<script src="js/places.js?v=73"></script>
-<script src="js/map.js?v=73"></script>
-<script src="js/ch2-labels.js?v=73"></script>
-<script src="js/diagram-kit.js?v=73"></script>
-<script src="js/ch3-method.js?v=73"></script>
-<script src="js/ch3-readwrite.js?v=73"></script>
-<script src="js/ch5-refusal.js?v=73"></script>
+<script src="js/places.js?v=85"></script>
+<script src="js/map.js?v=85"></script>
+<script src="js/ch2-labels.js?v=85"></script>
+<script src="js/diagram-kit.js?v=85"></script>
+<script src="js/ch3-method.js?v=85"></script>
+<script src="js/ch3-readwrite.js?v=85"></script>
+<script src="js/ch5-refusal.js?v=85"></script>
+<script src="js/intro.js?v=85"></script>
 </body>
 </html>
