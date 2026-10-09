@@ -54,7 +54,7 @@ em { font-style: italic; }
 
 .title-page {
   position: relative;
-  min-height: 88vh;
+  min-height: 72vh;
   max-width: 76rem;
   margin: 0 auto;
   padding: 6rem 2rem 4rem;
@@ -120,7 +120,7 @@ em { font-style: italic; }
 .chapter-head {
   max-width: var(--measure);
   margin: 0 auto;
-  padding: 7rem 1rem 2rem;
+  padding: 3.5rem 1rem 1.5rem;
 }
 
 .chapter-head .numeral {
@@ -421,7 +421,7 @@ em { font-style: italic; }
 
 /* The heading sits in the essay column, so heading and text form one block
    centred beside the plate. */
-#chapter-2 { padding-top: 7rem; }
+#chapter-2 { padding-top: 3.5rem; }
 #chapter-2 .ch2-head { max-width: none; margin: 0; padding: 0 0 0.5rem; }
 
 .essay-with-plate {
@@ -475,7 +475,7 @@ em { font-style: italic; }
 
 .cue-demo {
   max-width: 60rem;
-  margin: 5rem auto 0;
+  margin: 3rem auto 0;
   padding: 2rem 2.2rem 2.2rem;
   background: var(--wall-2);
   border: 1px solid rgba(184, 146, 74, 0.45);
@@ -567,7 +567,7 @@ em { font-style: italic; }
 /* ─── Static plates (introduction) ─────────────────── */
 .static-plate { max-width: 76rem; margin: 2.5rem auto 0; padding: 0 2rem; }
 .plate-caption { margin-top: 0.8rem; color: var(--ink-muted); font-size: 0.95rem; line-height: 1.5; }
-.static-plate + .chapter-head.chapter-body { padding-top: 3rem; }
+.static-plate + .chapter-head.chapter-body { padding-top: 2rem; }
 .diagram .d-silhouette { fill: var(--paper-ink); }
 .diagram .d-silhouette .d-silhouette-cut { fill: #efe6d2; }
 .diagram .d-model-small { font-size: 22px; }
@@ -718,7 +718,7 @@ em { font-style: italic; }
 :is(#ch3-scrolly, #ch3-rw-scrolly) .note-index { flex-direction: row; gap: 1.1rem; }
 
 /* "Beyond the user": a short essay coda, no drop cap. */
-.chapter-head.beyond { padding-top: 5rem; }
+.chapter-head.beyond { padding-top: 2.5rem; }
 .chapter-head.beyond 
 /* ─── Chapter V: refusal ───────────────────────────── */
 
@@ -784,7 +784,7 @@ em { font-style: italic; }
   padding: 3rem 1rem 1rem;
   border-top: 1px solid var(--rule);
 }
-#use-of-ai { margin-top: 5rem; }
+#use-of-ai { margin-top: 3rem; }
 .end-matter h2 {
   font-family: var(--serif-display);
   font-weight: 500;

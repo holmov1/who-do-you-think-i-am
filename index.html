@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=89">
+  <link rel="stylesheet" href="css/style.css?v=91">
 </head>
 <body>
 
@@ -41,7 +41,6 @@
   <section id="introduction" aria-labelledby="intro-title">
 
     <div class="chapter-head">
-      <span class="kicker">Introduction</span>
       <h2 id="intro-title">A Picture of the <em>User</em></h2>
       <div class="prose">
         <p>A language model answers not only what is asked, but also whom it believes is asking. Consider a request for a destination for a week away and a rough nightly hotel budget. Nothing in it states the user’s income, yet the answer depends on it: the same model may suggest a hotel by the sea in Greece or a hostel on Bali, depending on what it believes about the person asking.</p>
@@ -69,8 +68,6 @@
   <section id="chapter-1" aria-labelledby="ch1-title">
 
     <div class="chapter-head">
-      <span class="numeral">I</span>
-      <span class="kicker">Where the user has been studied</span>
       <h2 id="ch1-title">Between <em>Bias</em> and <em>Persona</em></h2>
       <div class="prose">
         <p>Every conversation with a language model has two characters in it. One is the model, whose character, its <em>persona</em>, has become an object of study in its own right. The other is the user, who has mostly been studied as a problem: a source of bias, a variable to control for.</p>
@@ -151,8 +148,6 @@
     <div class="essay-with-plate">
       <div class="essay-col">
       <div class="chapter-head ch2-head">
-        <span class="numeral">II</span>
-        <span class="kicker">What the model believes</span>
         <h2 id="ch2-title">Beliefs, not <em>Labels</em></h2>
       </div>
       <div class="prose">
@@ -212,8 +207,6 @@
   <section id="chapter-3" aria-labelledby="ch3-title">
 
     <div class="chapter-head">
-      <span class="numeral">III</span>
-      <span class="kicker">How the model teaches itself</span>
       <h2 id="ch3-title">Belief <em>Self-Distillation</em></h2>
       <div class="prose">
         <p>If a belief is defined by what it does, the way to find it is to make it do something. We ask the model about its user, then ask a second copy of the same model to give the same answer without seeing the conversation, and give that copy one narrow channel to learn through. Whatever passes through that channel is the user model.</p>
@@ -285,7 +278,6 @@
     </div>
 
     <div class="chapter-head beyond">
-      <span class="kicker">Beyond the user</span>
       <div class="prose">
         <p>Nothing in this recipe is specific to users. The questions decide <em>what</em> we ask about; the model decides <em>what it believes</em>. Any belief that can be put as a multiple-choice question, about the author of a text, about the situation the model thinks it is in, about the world, can be distilled the same way: from natural data, without labels, into a vector that can be read and written back.</p>
         <p>The user is where we started, because it is where a model’s private judgments touch people most directly.</p>
@@ -299,8 +291,6 @@
   <section id="chapter-4" aria-labelledby="ch4-title">
 
     <div class="chapter-head">
-      <span class="numeral">IV</span>
-      <span class="kicker">Reading and writing</span>
       <h2 id="ch4-title">Read, then <em>Rewrite</em></h2>
       <div class="prose">
         <p>Training leaves us with two maps and nothing else: <em>A</em>, which turns the model’s hidden state into a user vector, and <em>B</em>, which writes a user vector back. The model itself is never touched. What we have built is an interface: a narrow, labelled window onto one part of the model’s internal state.</p>
@@ -374,8 +364,6 @@
   <section id="chapter-5" aria-labelledby="ch5-title">
 
     <div class="chapter-head">
-      <span class="numeral">V</span>
-      <span class="kicker">Refusal and the user model</span>
       <h2 id="ch5-title">Same Request, <em>Different User</em></h2>
     </div>
 
@@ -429,8 +417,6 @@
   <!-- ─── Chapter VI ──────────────────────────────── -->
   <section id="chapter-6" aria-labelledby="ch6-title">
     <div class="chapter-head">
-      <span class="numeral">VI</span>
-      <span class="kicker">Looking back</span>
       <h2 id="ch6-title">Concluding <em>Thoughts</em></h2>
       <div class="prose">
         <p class="tbc">tbc</p>
@@ -441,8 +427,6 @@
   <!-- ─── Chapter VII ─────────────────────────────── -->
   <section id="chapter-7" aria-labelledby="ch7-title">
     <div class="chapter-head">
-      <span class="numeral">VII</span>
-      <span class="kicker">Looking ahead</span>
       <h2 id="ch7-title">Follow-Up <em>Directions</em></h2>
       <div class="prose">
         <p class="tbc">tbc</p>
@@ -486,13 +470,13 @@
   Holmov, Huang, Bykov &amp; Akata · <a href="https://arxiv.org/abs/2609.31603">arXiv:2609.31603</a> · 2026
 </footer>
 
-<script src="js/places.js?v=89"></script>
-<script src="js/map.js?v=89"></script>
-<script src="js/ch2-labels.js?v=89"></script>
-<script src="js/diagram-kit.js?v=89"></script>
-<script src="js/ch3-method.js?v=89"></script>
-<script src="js/ch3-readwrite.js?v=89"></script>
-<script src="js/ch5-refusal.js?v=89"></script>
-<script src="js/intro.js?v=89"></script>
+<script src="js/places.js?v=91"></script>
+<script src="js/map.js?v=91"></script>
+<script src="js/ch2-labels.js?v=91"></script>
+<script src="js/diagram-kit.js?v=91"></script>
+<script src="js/ch3-method.js?v=91"></script>
+<script src="js/ch3-readwrite.js?v=91"></script>
+<script src="js/ch5-refusal.js?v=91"></script>
+<script src="js/intro.js?v=91"></script>
 </body>
 </html>
