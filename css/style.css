@@ -427,7 +427,7 @@ em { font-style: italic; }
   grid-template-columns: minmax(0, 44rem) minmax(0, 26rem);
   gap: 4rem;
   justify-content: center;
-  align-items: start;
+  align-items: center;
 }
 
 .painting { margin: 0.4rem 0 0; }
