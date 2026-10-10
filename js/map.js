@@ -116,7 +116,7 @@
     }
   }
 
-  const compass = { x: 1430, y: 560, r: 44 };
+  const compass = { x: 1440, y: 622, r: 40 };
   const rhumb = el("g", { class: "rhumb", "aria-hidden": "true" }, svg);
   for (let i = 0; i < 16; i++) {
     const a = (i / 16) * Math.PI * 2;
@@ -125,14 +125,14 @@
 
   // ── Islands ─────────────────────────────────────────
   const regionBias = el("g", { class: "layer region-bias" }, svg);
-  island(regionBias, { cx: 300, cy: 390, rx: 255, ry: 235, wobble: [[0.06, 3, 0.4], [0.04, 5, 1.9], [0.02, 9, 0.7], [0.01, 15, 2.2]], n: 48 });
-  [[95, 318], [462, 262], [445, 540], [92, 472]].forEach(([x, y]) => hill(regionBias, x, y));
-  regionName(regionBias, "bias", "The User as Bias", "the user studied as a confound", 90, 510, 132, 26, 194);
+  island(regionBias, { cx: 355, cy: 405, rx: 315, ry: 255, wobble: [[0.04, 3, 0.4], [0.025, 5, 1.9], [0.012, 9, 0.7]], n: 48 });
+  [[560, 225], [600, 590]].forEach(([x, y]) => hill(regionBias, x, y));
+  regionName(regionBias, "bias", "The User as Bias", "the user studied as a confound", 150, 570, 128, 26, 192);
 
   const regionPersona = el("g", { class: "layer region-persona" }, svg);
-  island(regionPersona, { cx: 1280, cy: 340, rx: 175, ry: 185, wobble: [[0.05, 3, 2.1], [0.04, 4, 0.3], [0.02, 11, 1.2]], n: 40 });
-  [[1205, 488], [1348, 482], [1410, 330]].forEach(([x, y]) => hill(regionPersona, x, y));
-  regionName(regionPersona, "persona", "The Model as Persona", "the model’s own character", 1100, 1486, 132, 26, 210);
+  island(regionPersona, { cx: 1262, cy: 370, rx: 192, ry: 205, wobble: [[0.05, 3, 2.1], [0.04, 4, 0.3], [0.02, 11, 1.2]], n: 40 });
+  [[1380, 520], [1430, 300]].forEach(([x, y]) => hill(regionPersona, x, y));
+  regionName(regionPersona, "persona", "The Model as Persona", "the model’s own character", 1072, 1452, 132, 26, 214);
 
   // ── The strait: name appears at step iii ───────────
   const straitLayer = el("g", { class: "layer strait-layer", "aria-hidden": "true" }, svg);
@@ -142,15 +142,17 @@
   // ── First crossing: the Transluce rock and its plank ─
   const latentLayer = el("g", { class: "layer latentqa-layer" }, svg);
   island(latentLayer, { cx: 830, cy: 334, rx: 32, ry: 25, wobble: [[0.12, 3, 0.8], [0.06, 5, 2.0]], n: 14 });
-  bridgeOn(latentLayer, "M546,352 Q690,332 796,338", "bridge-latentqa", 4, 12);
+  bridgeOn(latentLayer, "M684,350 Q745,334 796,338", "bridge-latentqa", 4, 12);
 
   // ── The BSD bridge, spanning the whole strait ───────
   const bsdLayer = el("g", { class: "layer bsd-layer" }, svg);
-  bridgeOn(bsdLayer, "M542,446 Q840,372 1140,444", "bridge-bsd", 6, 12);
+  bridgeOn(bsdLayer, "M676,446 Q880,372 1088,444", "bridge-bsd", 6, 12);
   // Our paper: its full title in red under the bridge.
   const bridgeLink = el("g", { class: "place bridge-name", tabindex: "0", role: "button", "aria-label": `${bridge.title}, our preprint` }, bsdLayer);
-  const bl1 = el("text", { class: "bridge-label", x: 840, y: 470, "text-anchor": "middle" }, bridgeLink);
-  bl1.textContent = bridge.title;
+  // Two lines, centred under the middle of the bridge.
+  const bl1 = el("text", { class: "bridge-label", x: 882, y: 468, "text-anchor": "middle" }, bridgeLink);
+  el("tspan", { x: 882 }, bl1).textContent = "User Model Extraction";
+  el("tspan", { x: 882, dy: "1.2em" }, bl1).textContent = "via Belief Self-Distillation";
 
   // ── Cartouche and compass ───────────────────────────
   const cart = el("g", { class: "cartouche" }, svg);
@@ -291,12 +293,10 @@
   const DESKTOP_VIEW = [0, 0, W, H];
   const PHONE_VIEWS = {
     0: [0, -210, 1500, 1200],
-    1: [-20, 90, 700, 560],
-    2: [-20, 90, 700, 560],
-    3: [880, 90, 700, 560],
-    4: [520, 140, 640, 512],
-    5: [520, 140, 640, 512],
-    6: [520, 140, 640, 512],
+    1: [30, 120, 670, 536],
+    2: [1020, 140, 480, 384],
+    3: [560, 160, 600, 480],
+    4: [560, 160, 600, 480],
   };
   let currentView = DESKTOP_VIEW.slice(), viewAnim = null;
 
@@ -340,7 +340,7 @@
     }, { rootMargin: "-50% 0px -50% 0px" });
     triggers.forEach(t => io.observe(t));
   } else {
-    setStep(6);
+    setStep(4);
   }
 
   navButtons.forEach(button => {

@@ -162,8 +162,8 @@ em { font-style: italic; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1.2rem;
-  padding: 1.5vh 2rem 2vh;
+  gap: 0.9rem;
+  padding: 1vh 2rem 1.5vh;
 }
 
 /* The plate: map on paper inside a thin gilt frame. Its width follows the
@@ -201,7 +201,7 @@ em { font-style: italic; }
   background: var(--wall-2);
   border: 1px solid rgba(184, 146, 74, 0.45);
   border-top: 2px solid var(--gilt);
-  padding: 1.3rem 1.8rem 1.4rem;
+  padding: 1.1rem 1.8rem 1.1rem;
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
 }
 
@@ -341,33 +341,27 @@ em { font-style: italic; }
 .map .compass path, .map .compass circle { stroke: var(--paper-ink); }
 .map .compass text { font-family: var(--serif-text); font-size: 18px; fill: var(--paper-ink); }
 
-/* Step states. The SVG gets data-step="0..6":
-   1–2 the bias island, 3 the persona island, 4 the strait,
-   5 the LatentQA plank, 6 the BSD bridge. */
+/* Step states. The SVG gets data-step="0..4":
+   1 the bias island, 2 the persona island, 3 the strait and the LatentQA
+   plank, 4 the BSD bridge. */
 .map .layer { transition: opacity 0.6s ease; }
 
 .map[data-step="1"] .region-persona,
-.map[data-step="2"] .region-persona,
-.map[data-step="3"] .region-bias { opacity: 0.38; }
+.map[data-step="2"] .region-bias { opacity: 0.38; }
 .map[data-step="1"] .region-bias .coast,
-.map[data-step="2"] .region-bias .coast,
-.map[data-step="3"] .region-persona .coast { fill: var(--paper-wash); }
+.map[data-step="2"] .region-persona .coast { fill: var(--paper-wash); }
 
 .map .strait-layer,
 .map .latentqa-layer,
 .map .bsd-layer { opacity: 0; pointer-events: none; }
-.map[data-step="4"] .strait-layer,
-.map[data-step="5"] .strait-layer,
-.map[data-step="6"] .strait-layer { opacity: 1; }
-.map[data-step="5"] .latentqa-layer,
-.map[data-step="6"] .latentqa-layer { opacity: 1; pointer-events: auto; }
-.map[data-step="6"] .bsd-layer { opacity: 1; pointer-events: auto; }
+.map:is([data-step="3"], [data-step="4"]) .strait-layer { opacity: 1; }
+.map:is([data-step="3"], [data-step="4"]) .latentqa-layer { opacity: 1; pointer-events: auto; }
+.map[data-step="4"] .bsd-layer { opacity: 1; pointer-events: auto; }
 
 /* Bridges are drawn with a stroke-dash sweep. */
 .map .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); transition: stroke-dashoffset 1.4s ease; }
-.map[data-step="5"] .latentqa-layer .draw,
-.map[data-step="6"] .latentqa-layer .draw,
-.map[data-step="6"] .bsd-layer .draw { stroke-dashoffset: 0; }
+.map:is([data-step="3"], [data-step="4"]) .latentqa-layer .draw,
+.map[data-step="4"] .bsd-layer .draw { stroke-dashoffset: 0; }
 
 /* ─── Place card (the "museum label" for a paper) ─── */
 

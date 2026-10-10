@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=91">
+  <link rel="stylesheet" href="css/style.css?v=118">
 </head>
 <body>
 
@@ -70,8 +70,8 @@
     <div class="chapter-head">
       <h2 id="ch1-title">Between <em>Bias</em> and <em>Persona</em></h2>
       <div class="prose">
-        <p>Every conversation with a language model has two characters in it. One is the model, whose character, its <em>persona</em>, has become an object of study in its own right. The other is the user, who has mostly been studied as a problem: a source of bias, a variable to control for.</p>
-        <p>Below is a map of those two territories and the water between them. Every place on it is a paper; select one to read what it found and to follow the link.</p>
+        <p>Every conversation with a language model has two characters in it. One is the model, whose character, its <em>persona</em>, has become an object of study in its own right. The other is the user, who has mostly been studied as a problem: a source of bias, a variable to control for. Personalization, too, has largely been studied from the model’s side, with a synthetic user written into the prompt.</p>
+        <p>We can picture these two threads as two isolated islands on an allegorical map. Every place on the map is a paper; select one to read what it found.</p>
       </div>
     </div>
 
@@ -88,42 +88,30 @@
         <div class="notes">
           <nav class="note-index" aria-label="Map steps">
           <button type="button" data-goto="1" aria-label="Step i: The user as bias">i</button>
-          <button type="button" data-goto="2" aria-label="Step ii: Cues and real conversations">ii</button>
-          <button type="button" data-goto="3" aria-label="Step iii: The model as persona">iii</button>
-          <button type="button" data-goto="4" aria-label="Step iv: The strait">iv</button>
-          <button type="button" data-goto="5" aria-label="Step v: The first plank">v</button>
-          <button type="button" data-goto="6" aria-label="Step vi: The crossing">vi</button>
+          <button type="button" data-goto="2" aria-label="Step ii: The model as persona">ii</button>
+          <button type="button" data-goto="3" aria-label="Step iii: The strait">iii</button>
+          <button type="button" data-goto="4" aria-label="Step iv: The crossing">iv</button>
           </nav>
           <div class="note-stack" aria-live="polite">
           <article class="note" data-step="1">
             <span class="note-num">i. The user as bias</span>
-            <p>On the western shore, the user appears as a confound. A demographic cue goes into the prompt, a name, a hometown, <em>“I don’t have much money,”</em> and researchers measure how the answer shifts.<sup class="cite">[<a href="#ref-1">1</a>, <a href="#ref-2">2</a>]</sup></p>
-            <p>This work shows that models notice who they are talking to,<sup class="cite">[<a href="#ref-4">4</a>]</sup> that the demographic signal can be found in activations and even steered away,<sup class="cite">[<a href="#ref-1">1</a>, <a href="#ref-2">2</a>, <a href="#ref-3">3</a>]</sup> and that it can mean worse answers for users placed in minority groups.<sup class="cite">[<a href="#ref-1">1</a>]</sup></p>
+            <p>On the western shore lies the user, studied mostly as a source of risk: of biased answers,<sup class="cite">[<a href="#ref-1">1</a>, <a href="#ref-19">19</a>]</sup> of sycophancy,<sup class="cite">[<a href="#ref-20">20</a>]</sup> of privacy leakage through what can be inferred from their text.<sup class="cite">[<a href="#ref-21">21</a>]</sup> Personalization has mostly been studied with the user given to the model explicitly, as a profile, a history or synthetic cues in the prompt,<sup class="cite">[<a href="#ref-22">22</a>, <a href="#ref-24">24</a>, <a href="#ref-1">1</a>]</sup> with success measured by how well the output fits that user.</p>
+            <p>In each case, the user is constructed by us and given to the model, rather than inferred by it. Yet different cues for the same person already give different results,<sup class="cite">[<a href="#ref-5">5</a>]</sup> and real users rarely announce themselves. What a model infers from a real conversation about its user is still open, and may well differ from the user profile we would write.</p>
           </article>
           <article class="note" data-step="2">
-            <span class="note-num">ii. Cues and real conversations</span>
-            <p>But the user here is mostly someone <em>we</em> declare: a name, an explicit statement or a stereotypical interest, set against a neutral version of the same prompt. Different cues for the same person already give different results,<sup class="cite">[<a href="#ref-5">5</a>]</sup> and real users rarely announce themselves.</p>
-            <p>These studies answer the question <em>what is encoded?</em> when we write a user in. What a model picks up from a real conversation, where nobody has, is still open.</p>
-          </article>
-          <article class="note" data-step="3">
-            <span class="note-num">iii. The model as persona</span>
-            <p>On the eastern shore lives the model’s own character. Persona vectors find directions for traits such as sycophancy and use them to monitor and steer the model;<sup class="cite">[<a href="#ref-6">6</a>]</sup> other work follows personas as they surface during reasoning.<sup class="cite">[<a href="#ref-7">7</a>]</sup></p>
+            <span class="note-num">ii. The model as persona</span>
+            <p>On the eastern shore lies the model’s own character, its persona. It has been measured with psychometric tests,<sup class="cite">[<a href="#ref-15">15</a>]</sup> traced in activations as traits such as sycophancy or evil,<sup class="cite">[<a href="#ref-6">6</a>]</sup> linked to emergent misalignment<sup class="cite">[<a href="#ref-16">16</a>]</sup> and to jailbreaks,<sup class="cite">[<a href="#ref-17">17</a>]</sup> and tracked as it drifts away from the default assistant.<sup class="cite">[<a href="#ref-18">18</a>]</sup></p>
             <p>Here an internal state is taken seriously as something that <em>shapes behaviour</em>, not only something that leaks into it, and many of the traits studied concern safety.</p>
           </article>
+          <article class="note" data-step="3">
+            <span class="note-num">iii. The strait</span>
+            <p>The two shores rarely meet: one studies the user from the outside, the other the model from the inside. Yet if a model has a character of its own, it presumably also holds a picture of <em>us</em>: not a label we hand it, but a belief it forms from the conversation and acts on. That picture is the user-side counterpart of the persona.</p>
+            <p>The first plank was laid by Transluce,<sup class="cite">[<a href="#ref-9">9</a>]</sup> who read a model’s beliefs about its user with a trained decoder.<sup class="cite">[<a href="#ref-10">10</a>]</sup> Those beliefs matched what the model itself said about the user better than who the users actually were.</p>
+          </article>
           <article class="note" data-step="4">
-            <span class="note-num">iv. The strait</span>
-            <p>If a model has a character of its own, it presumably also holds a picture of <em>us</em>: not a label we hand it, but a belief it forms from the conversation and acts on. That picture is the user-side counterpart of the persona.</p>
-            <p>And if the model persona matters for safety, so should the user: a model may help or refuse depending on who it thinks is asking.<sup class="cite">[<a href="#ref-8">8</a>, <a href="#ref-4">4</a>]</sup> So besides demographics, we look at how the model reads a user’s intent, their trust in AI and their tolerance for its mistakes.</p>
-          </article>
-          <article class="note" data-step="5">
-            <span class="note-num">v. The first plank</span>
-            <p>Transluce laid the first plank.<sup class="cite">[<a href="#ref-9">9</a>]</sup> Using a LatentQA decoder,<sup class="cite">[<a href="#ref-10">10</a>]</sup> a second model trained on prompts where the user’s attributes are written in, they read what a model believes about the person in front of it, and could steer it.</p>
-            <p>On real conversations, the decoder agreed more with what the model itself seemed to think than with who the users actually were. It established the point everything else rests on: the user model is the model’s <em>belief</em>, not the user’s ground truth.</p>
-          </article>
-          <article class="note" data-step="6">
-            <span class="note-num">vi. The crossing</span>
-            <p>Our preprint<sup class="cite">[<a href="#ref-11">11</a>]</sup> tries to complete the crossing with lighter materials: a single linear map instead of a second model, real conversations instead of written cues, and no labels: the model’s own answers supervise it.</p>
-            <p>The model reads a conversation and answers questions about the user; a copy that sees only the questions must give the same answers, with the map as its only window onto the conversation. What comes out is one compact vector that can be <em>read</em>, and also <em>written back</em> to see what the model does with it.</p>
+            <span class="note-num">iv. The crossing</span>
+            <p>Our preprint<sup class="cite">[<a href="#ref-11">11</a>]</sup> builds on this step and widens it. It treats the user model as a structured set of beliefs, formed by the model itself from real conversations. Seen this way, personalization is not a response to a user we describe, but a consequence of what the model believes.</p>
+            <p>If the persona matters for safety, so should this picture. So besides demographics, we must look at how the model reads a user’s intent, their trust in AI and their tolerance for its mistakes. And a belief matters only if the model acts on it, so the question is not only what the model believes about its user, but whether changing that belief changes what the model does.</p>
           </article>
           </div>
         </div>
@@ -134,8 +122,6 @@
       <div class="trigger" data-step="2"></div>
       <div class="trigger" data-step="3"></div>
       <div class="trigger" data-step="4"></div>
-      <div class="trigger" data-step="5"></div>
-      <div class="trigger" data-step="6"></div>
       </div>
     </div>
 
@@ -456,6 +442,16 @@
       <li id="ref-12">Dennett, D. C. <em>The Intentional Stance</em>. MIT Press, 1987.</li>
       <li id="ref-13">Zhao, W., Ren, X., Hessel, J., Cardie, C., Choi, Y. &amp; Deng, Y. <a href="https://openreview.net/forum?id=Bl8u7ZRlbM"><em>WildChat: 1M ChatGPT Interaction Logs in the Wild</em></a>. ICLR 2024.</li>
       <li id="ref-14">Souly, A., Lu, Q., Bowen, D., et al. <a href="https://arxiv.org/abs/2402.10260"><em>A StrongREJECT for Empty Jailbreaks</em></a>. NeurIPS 2024.</li>
+      <li id="ref-15">Serapio-García, G., Safdari, M., Crepy, C., et al. <a href="https://arxiv.org/abs/2307.00184"><em>Personality Traits in Large Language Models</em></a>. arXiv 2023.</li>
+      <li id="ref-16">Wang, M., Dupré la Tour, T., Watkins, O., et al. <a href="https://arxiv.org/abs/2506.19823"><em>Persona Features Control Emergent Misalignment</em></a>. arXiv 2025.</li>
+      <li id="ref-17">Shah, R., Feuillade-Montixi, Q., Pour, S., et al. <a href="https://arxiv.org/abs/2311.03348"><em>Scalable and Transferable Black-Box Jailbreaks for Language Models via Persona Modulation</em></a>. arXiv 2023.</li>
+      <li id="ref-18">Lu, C., Gallagher, J., Michala, J., Fish, K. &amp; Lindsey, J. <a href="https://arxiv.org/abs/2601.10387"><em>The Assistant Axis: Situating and Stabilizing the Default Persona of Language Models</em></a>. arXiv 2026.</li>
+      <li id="ref-19">Eloundou, T., Beutel, A., Robinson, D. G., et al. <a href="https://arxiv.org/abs/2410.19803"><em>First-Person Fairness in Chatbots</em></a>. arXiv 2024.</li>
+      <li id="ref-20">Sharma, M., Tong, M., Korbak, T., et al. <a href="https://arxiv.org/abs/2310.13548"><em>Towards Understanding Sycophancy in Language Models</em></a>. ICLR 2024.</li>
+      <li id="ref-21">Staab, R., Vero, M., Balunović, M. &amp; Vechev, M. <a href="https://arxiv.org/abs/2310.07298"><em>Beyond Memorization: Violating Privacy via Inference with Large Language Models</em></a>. ICLR 2024.</li>
+      <li id="ref-22">Salemi, A., Mysore, S., Bendersky, M. &amp; Zamani, H. <a href="https://arxiv.org/abs/2304.11406"><em>LaMP: When Large Language Models Meet Personalization</em></a>. ACL 2024.</li>
+      <li id="ref-23">Liu, J., Qiu, Z., Li, Z., et al. <a href="https://arxiv.org/abs/2502.11528"><em>A Survey of Personalized Large Language Models: Progress and Future Directions</em></a>. arXiv 2025.</li>
+      <li id="ref-24">Jin, Z., Heil, N., Liu, J., et al. <a href="https://arxiv.org/abs/2405.14808"><em>Implicit Personalization in Language Models: A Systematic Study</em></a>. Findings of EMNLP 2024.</li>
     </ol>
   </section>
 
@@ -470,13 +466,13 @@
   Holmov, Huang, Bykov &amp; Akata · <a href="https://arxiv.org/abs/2609.31603">arXiv:2609.31603</a> · 2026
 </footer>
 
-<script src="js/places.js?v=91"></script>
-<script src="js/map.js?v=91"></script>
-<script src="js/ch2-labels.js?v=91"></script>
-<script src="js/diagram-kit.js?v=91"></script>
-<script src="js/ch3-method.js?v=91"></script>
-<script src="js/ch3-readwrite.js?v=91"></script>
-<script src="js/ch5-refusal.js?v=91"></script>
-<script src="js/intro.js?v=91"></script>
+<script src="js/places.js?v=118"></script>
+<script src="js/map.js?v=118"></script>
+<script src="js/ch2-labels.js?v=118"></script>
+<script src="js/diagram-kit.js?v=118"></script>
+<script src="js/ch3-method.js?v=118"></script>
+<script src="js/ch3-readwrite.js?v=118"></script>
+<script src="js/ch5-refusal.js?v=118"></script>
+<script src="js/intro.js?v=118"></script>
 </body>
 </html>
