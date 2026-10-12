@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=119">
+  <link rel="stylesheet" href="css/style.css?v=146">
 </head>
 <body>
 
@@ -137,9 +137,10 @@
         <h2 id="ch2-title">Beliefs, not <em>Labels</em></h2>
       </div>
       <div class="prose">
-        <p>Ask who a user really is and you need ground truth: a survey, a self-report, a label someone attached. Ask what a model believes about that user and there is nothing to check against. The model may be wrong, may be stereotyping, may be unsure, and it is still the model’s view that shapes the answer.</p>
-        <p>Dennett’s intentional stance offers a way out. A belief is not something written down inside a system; it is whatever we need to attribute to it to explain and predict what it does.<sup class="cite">[<a href="#ref-12">12</a>]</sup> For language models this becomes a practical question: which internal state, when we change it, changes what the model says about its user, and how it treats them?</p>
-        <p>That is also why labels are the wrong target. A cue written into the prompt tells us what we wanted the model to think, not what it concludes when it meets a real person. To see beliefs, we have to look where they form: in real conversations, where nobody introduces themselves.</p>
+        <p>In the 1780s, Johann Caspar Lavater traced the shadows of his sitters on a screen and read their character from the drawing, without interacting with the person directly. A language model is in a similar position: it sees its user only through a conversation, and the picture it forms may be stereotyped and different from how the user would describe themselves. With no ground truth to check this picture against, how can we tell what the model believes at all?</p>
+        <p>Following Dennett’s intentional stance, we treat a belief as a state attributed to a system to explain and predict its behaviour.<sup class="cite">[<a href="#ref-12">12</a>]</sup> For a language model, this means looking for an internal state that, when changed, changes what the model says about its user and how it responds.</p>
+        <p>This also determines the data: we work with real conversations that carry no external labels about the user. They come from two sources: ordinary user chats from <a href="https://huggingface.co/datasets/allenai/WildChat-1M">WildChat</a>,<sup class="cite">[<a href="#ref-13">13</a>]</sup> and adversarial prompts from <a href="https://huggingface.co/datasets/allenai/wildjailbreak">WildJailbreak</a>,<sup class="cite">[<a href="#ref-25">25</a>]</sup> which add users with harmful intent, rare in ordinary chats.</p>
+        <p>For comparison, we construct a second dataset in the style of earlier work:<sup class="cite">[<a href="#ref-1">1</a>]</sup> an explicit cue placed in front of a task taken from <a href="https://huggingface.co/datasets/tatsu-lab/alpaca">Alpaca</a>,<sup class="cite">[<a href="#ref-26">26</a>]</sup> as in the example below. We then train two linear probes on the model’s hidden states. One learns to predict the user from the explicit cues; the other, from the beliefs the model infers from real conversations. Both are then tested on real conversations.</p>
       </div>
       </div>
 
@@ -156,7 +157,7 @@
     </div>
 
     <div class="cue-demo" id="cue-demo">
-      <span class="kicker">A user we wrote, and a user the model met</span>
+      <span class="kicker">Synthetic cues vs implicit beliefs</span>
 
       <div class="cue-cards">
         <div class="cue-card">
@@ -176,14 +177,14 @@
         </div>
       </div>
 
-      <div class="cue-chart" id="cue-chart" role="img" aria-label="Macro-F1 on the model’s beliefs in real conversations. Probe trained on written-in users: Llama 0.43, Qwen 0.39, OLMo 0.40. Probe trained on the model’s beliefs: Llama 0.70, Qwen 0.72, OLMo 0.70. Chance 0.34.">
+      <div class="cue-chart" id="cue-chart" role="img" aria-label="Macro-F1 on the model’s beliefs in real conversations. Probe trained on synthetic cues about users: Llama 0.43, Qwen 0.39, OLMo 0.40. Probe trained on the model’s beliefs: Llama 0.70, Qwen 0.72, OLMo 0.70. Chance 0.34.">
         <div class="cue-legend">
-          <span class="cue-key cue-key-cue">Probe trained on written-in users</span>
+          <span class="cue-key cue-key-cue">Probe trained on synthetic cues about users</span>
           <span class="cue-key cue-key-belief">Probe trained on the model’s own beliefs</span>
         </div>
       </div>
 
-      <p class="cue-caption">Macro-F1 when predicting what the model believes about users in <strong>real conversations</strong>. A probe trained on written-in users, which reads them almost perfectly (0.98–0.99), falls close to chance; a probe trained on the model’s own beliefs does not.<sup class="cite">[<a href="#ref-11">11</a>]</sup></p>
+      <p class="cue-caption">Macro-F1 when predicting user attributes in real conversations. A probe trained with explicit cues falls on real conversations close to chance; a probe trained on the model’s own beliefs generalises.<sup class="cite">[<a href="#ref-11">11</a>]</sup></p>
     </div>
 
 
@@ -195,8 +196,7 @@
     <div class="chapter-head">
       <h2 id="ch3-title">Belief <em>Self-Distillation</em></h2>
       <div class="prose">
-        <p>If a belief is defined by what it does, the way to find it is to make it do something. We ask the model about its user, then ask a second copy of the same model to give the same answer without seeing the conversation, and give that copy one narrow channel to learn through. Whatever passes through that channel is the user model.</p>
-        <p>One conversation runs through the whole method below.</p>
+        <p>But how do we obtain the beliefs a model infers from a conversation? If a belief is defined by what it does, the way to find it is to make the model do something. We propose Belief Self-Distillation (BSD): one copy of the model reads the conversation and answers structured questions about its user, and a second copy must give the same answers without seeing the conversation. The two are linked only by a low-rank linear map, which reads the first copy’s activations, compresses them and adds them to the second’s. Since the second copy never sees the conversation, everything it needs about the user has to pass through this map.</p>
       </div>
     </div>
 
@@ -214,9 +214,7 @@
           <button type="button" data-goto="1" aria-label="Step i: One model, two copies">i</button>
           <button type="button" data-goto="2" aria-label="Step ii: Asking the model">ii</button>
           <button type="button" data-goto="3" aria-label="Step iii: A copy that cannot see">iii</button>
-          <button type="button" data-goto="4" aria-label="Step iv: The narrow channel">iv</button>
-          <button type="button" data-goto="5" aria-label="Step v: Learning to agree">v</button>
-          <button type="button" data-goto="6" aria-label="Step vi: What comes out">vi</button>
+          <button type="button" data-goto="4" aria-label="Step iv: Learning to agree">iv</button>
           </nav>
           <div class="note-stack" aria-live="polite">
           <article class="note" data-step="1">
@@ -231,23 +229,13 @@
           </article>
           <article class="note" data-step="3">
             <span class="note-num">iii. A copy that cannot see</span>
-            <p>A second copy of the same frozen model gets only the question, never the conversation.</p>
-            <p>Left alone, it can only answer from its defaults: whatever it assumes about users in general.</p>
+            <p>A second copy of the same frozen model gets only the question, never the conversation. Left alone, it can only answer from its defaults: whatever it assumes about users in general.</p>
+            <p>At one layer, the reader’s last-token hidden state <em>h</em> has 4,096 dimensions. A learned linear read map <em>A</em> projects it to a 128-dimensional user vector <em>v</em><sub>user</sub>, a 32-fold compression. A write map <em>B</em> with orthonormal columns adds <em>B</em><em>v</em><sub>user</sub> to the guesser’s hidden state at the same layer. It is the guesser’s only access to the conversation.</p>
           </article>
           <article class="note" data-step="4">
-            <span class="note-num">iv. The narrow channel</span>
-            <p>At one layer, the reader’s last-token hidden state <em>h</em> has 4,096 dimensions. A learned linear read map <em>A</em> projects it to a 128-dimensional user vector <em>v</em><sub>user</sub>, a 32-fold compression.</p>
-            <p>A write map <em>B</em> with orthonormal columns adds <em>B</em><em>v</em><sub>user</sub> to the guesser’s hidden state at the same layer. It is the guesser’s only access to the conversation.</p>
-          </article>
-          <article class="note" data-step="5">
-            <span class="note-num">v. Learning to agree</span>
+            <span class="note-num">iv. Learning to agree</span>
             <p>Only <em>A</em> and <em>B</em> are trained; both copies stay frozen. Training minimises the KL divergence between the reader’s and the guesser’s answer distributions, over thirteen attributes of the user, from income to intent.</p>
-            <p>Nobody labels a single user. The model is its own teacher, and what it is taught is its own belief.</p>
-          </article>
-          <article class="note" data-step="6">
-            <span class="note-num">vi. What comes out</span>
-            <p>The bottleneck activation <em>v</em><sub>user</sub> is the user vector: the model’s picture of this user, compressed to what it needs to answer about them.</p>
-            <p>Because the vector was learned by being written back into the model, it is not only a summary. It is something the model can be made to act on.</p>
+            <p>The bottleneck activation <em>v</em><sub>user</sub> is the user vector: the model’s picture of this user, compressed to what it needs to answer about them. Because it is learned through the intervention itself, the vector both encodes the model’s belief and, when written back, sets it.</p>
           </article>
           </div>
         </div>
@@ -258,15 +246,12 @@
       <div class="trigger" data-step="2"></div>
       <div class="trigger" data-step="3"></div>
       <div class="trigger" data-step="4"></div>
-      <div class="trigger" data-step="5"></div>
-      <div class="trigger" data-step="6"></div>
       </div>
     </div>
 
     <div class="chapter-head beyond">
       <div class="prose">
-        <p>Nothing in this recipe is specific to users. The questions decide <em>what</em> we ask about; the model decides <em>what it believes</em>. Any belief that can be put as a multiple-choice question, about the author of a text, about the situation the model thinks it is in, about the world, can be distilled the same way: from natural data, without labels, into a vector that can be read and written back.</p>
-        <p>The user is where we started, because it is where a model’s private judgments touch people most directly.</p>
+        <p>Nothing in this recipe is specific to users. Any belief that can be put as a question about the situation the model thinks it is in and about the world, can be distilled using BSD.</p>
       </div>
     </div>
 
@@ -279,9 +264,8 @@
     <div class="chapter-head">
       <h2 id="ch4-title">Read, then <em>Rewrite</em></h2>
       <div class="prose">
-        <p>Training leaves us with two maps and nothing else: <em>A</em>, which turns the model’s hidden state into a user vector, and <em>B</em>, which writes a user vector back. The model itself is never touched. What we have built is an interface: a narrow, labelled window onto one part of the model’s internal state.</p>
-        <p>That window opens both ways. Through <em>A</em> we can read what the model believes about a user who has told it nothing about themselves, attribute by attribute. Through <em>B</em> we can change one of those beliefs and watch what the model does next, with the conversation and the question left exactly as they were.</p>
-        <p>The first is observation. The second is the stronger test: if a belief is defined by what it does, then changing it should change what the model does.</p>
+        <p>BSD leaves us with a read-write interface for the extracted user vectors. With <em>A</em>, we read the model’s beliefs about a user, using one linear probe per attribute. With <em>B</em>, we change one of these beliefs by activation steering and observe the model’s response while the conversation and the question stay fixed.</p>
+        <p>Reading shows what the user vector encodes; writing tests whether the model uses it. Below you can find qualitative examples as well as evaluation results.</p>
       </div>
     </div>
 
@@ -306,11 +290,11 @@
           <article class="note" data-steps="1 2 3">
             <span class="note-num">i. Reading</span>
             <p>Once trained, the read half works on its own: the frozen model reads a new conversation, <em>A</em> projects its hidden state to <em>v</em><sub>user</sub>, and one linear probe per attribute decodes the belief.</p>
-            <p>Three real conversations, read by our monitor. The highlighted words are those it ties to the marked belief: a price in won places the user in Asia; insulting an AI agent makes them hostile.</p>
+            <p>Three real conversations, read by our monitor. The highlighted words are those it ties to the marked belief (found via gradient attribution).</p>
           </article>
           <article class="note" data-steps="4">
             <span class="note-num">ii. How well it reads</span>
-            <p>This is measured on the test set, not on single examples. Linear probes on <em>v</em><sub>user</sub> reach macro-F1 0.66–0.68 across all thirteen attributes; the same probes on random vectors reach 0.32.<sup class="cite">[<a href="#ref-11">11</a>]</sup></p>
+            <p>Measured on the test set, linear probes on <em>v</em><sub>user</sub> reach macro-F1 0.66–0.68 across all thirteen attributes; the same probes on random vectors reach 0.32.<sup class="cite">[<a href="#ref-11">11</a>]</sup></p>
             <p>The 128-dimensional bottleneck keeps almost everything a linear readout finds in the full hidden state.</p>
           </article>
           <article class="note" data-steps="5">
@@ -321,7 +305,6 @@
           <article class="note" data-steps="6 7">
             <span class="note-num">iv. Other beliefs, other answers</span>
             <p>The same works for other beliefs and other questions. Written back as male, the protagonist of a story about the user changes pronouns and profession; written back as school-educated, a recommended film turns from <em>Moneyball</em> into <em>Iron Man</em>.</p>
-            <p>The words in the prompt never change. What changes is who the model thinks it is talking to.</p>
           </article>
           <article class="note" data-steps="8">
             <span class="note-num">v. How well it writes</span>
@@ -452,6 +435,8 @@
       <li id="ref-22">Salemi, A., Mysore, S., Bendersky, M. &amp; Zamani, H. <a href="https://arxiv.org/abs/2304.11406"><em>LaMP: When Large Language Models Meet Personalization</em></a>. ACL 2024.</li>
       <li id="ref-23">Liu, J., Qiu, Z., Li, Z., et al. <a href="https://arxiv.org/abs/2502.11528"><em>A Survey of Personalized Large Language Models: Progress and Future Directions</em></a>. arXiv 2025.</li>
       <li id="ref-24">Jin, Z., Heil, N., Liu, J., et al. <a href="https://arxiv.org/abs/2405.14808"><em>Implicit Personalization in Language Models: A Systematic Study</em></a>. Findings of EMNLP 2024.</li>
+      <li id="ref-25">Jiang, L., Rao, K., Han, S., et al. <a href="https://arxiv.org/abs/2406.18510"><em>WildTeaming at Scale: From In-the-Wild Jailbreaks to (Adversarially) Safer Language Models</em></a>. NeurIPS 2024.</li>
+      <li id="ref-26">Taori, R., Gulrajani, I., Zhang, T., et al. <a href="https://github.com/tatsu-lab/stanford_alpaca"><em>Stanford Alpaca: An Instruction-following LLaMA Model</em></a>. 2023.</li>
     </ol>
   </section>
 
@@ -466,13 +451,13 @@
   Holmov, Huang, Bykov &amp; Akata · <a href="https://arxiv.org/abs/2609.31603">arXiv:2609.31603</a> · 2026
 </footer>
 
-<script src="js/places.js?v=119"></script>
-<script src="js/map.js?v=119"></script>
-<script src="js/ch2-labels.js?v=119"></script>
-<script src="js/diagram-kit.js?v=119"></script>
-<script src="js/ch3-method.js?v=119"></script>
-<script src="js/ch3-readwrite.js?v=119"></script>
-<script src="js/ch5-refusal.js?v=119"></script>
-<script src="js/intro.js?v=119"></script>
+<script src="js/places.js?v=146"></script>
+<script src="js/map.js?v=146"></script>
+<script src="js/ch2-labels.js?v=146"></script>
+<script src="js/diagram-kit.js?v=146"></script>
+<script src="js/ch3-method.js?v=146"></script>
+<script src="js/ch3-readwrite.js?v=146"></script>
+<script src="js/ch5-refusal.js?v=146"></script>
+<script src="js/intro.js?v=146"></script>
 </body>
 </html>

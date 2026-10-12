@@ -556,7 +556,41 @@ em { font-style: italic; }
 }
 
 .cue-caption { margin-top: 1.2rem; color: var(--ink-muted); font-size: 1rem; line-height: 1.5; }
-.cue-caption strong { color: var(--ink-light); font-weight: 500; }
+
+/* Chapter II panel: three text styles only.
+   1 label (gold capitals) · 2 text (reading size) · 3 note (small, muted). */
+#cue-demo .kicker,
+#cue-demo .cue-card-label,
+#cue-demo .cc-role {
+  font-family: var(--serif-text);
+  font-variant-caps: normal;
+  text-transform: uppercase;
+  font-style: normal;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--gilt);
+}
+#cue-demo .cue-card-text,
+#cue-demo .cue-convo,
+#cue-demo .cue-group-label,
+#cue-demo .cue-key,
+#cue-demo .cue-value,
+#cue-demo .cue-caption {
+  font-family: var(--serif-text);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink-light);
+}
+#cue-demo .cue-group-label { text-transform: none; letter-spacing: 0; font-variant-caps: normal; }
+#cue-demo .cc-elided,
+#cue-demo .cue-card-source,
+#cue-demo .cue-chance-label {
+  font-family: var(--serif-text);
+  font-style: normal;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
 
 /* ─── Static plates (introduction) ─────────────────── */
 .static-plate { max-width: 76rem; margin: 2.5rem auto 0; padding: 0 2rem; }
@@ -570,7 +604,8 @@ em { font-style: italic; }
 .diagram .fo-prompt.fo-plain { font-style: normal; }
 
 /* ─── Chapter III: the method diagram ──────────────── */
-/* Method pane, data-step: 0–1 one model and its two copies · 2–6 the method. */
+/* Method pane, data-step: 0–1 one model and its two copies · 2 asking ·
+   3 the guesser and the channel · 4 training and the user vector. */
 
 .diagram {
   display: block;
@@ -581,10 +616,9 @@ em { font-style: italic; }
 }
 .diagram .layer { opacity: 0; transition: opacity 0.6s ease; }
 .diagram:is([data-step="0"], [data-step="1"]) .m-spawn,
-.diagram:is([data-step="2"], [data-step="3"], [data-step="4"], [data-step="5"], [data-step="6"]) :is(.m-conv, .m-reader),
-.diagram:is([data-step="3"], [data-step="4"], [data-step="5"], [data-step="6"]) .m-guesser,
-.diagram:is([data-step="4"], [data-step="5"], [data-step="6"]) .m-channel,
-.diagram:is([data-step="5"], [data-step="6"]) .m-teach { opacity: 1; }
+.diagram:is([data-step="2"], [data-step="3"], [data-step="4"]) :is(.m-conv, .m-reader),
+.diagram:is([data-step="3"], [data-step="4"]) :is(.m-guesser, .m-channel),
+.diagram[data-step="4"] .m-teach { opacity: 1; }
 
 /* Step i: the two copies slide out of the one model. */
 .diagram .ghost {
@@ -635,8 +669,8 @@ em { font-style: italic; }
 .note sub, .note sup { font-size: 0.7em; line-height: 0; }
 .diagram .d-vcell { fill: var(--paper-ink); transition: fill 0.6s ease, transform 0.6s ease; }
 .diagram .d-vector-label { fill: var(--accent); font-family: var(--serif-text); font-style: normal; font-size: 17px; opacity: 0; transition: opacity 0.6s ease; }
-.diagram[data-step="6"] .m-channel .d-vcell { fill: var(--accent); }
-.diagram[data-step="6"] .d-vector-label,
+.diagram[data-step="4"] .m-channel .d-vcell { fill: var(--accent); }
+.diagram[data-step="4"] .d-vector-label,
 .diagram .d-vector-label.is-on { opacity: 1; }
 /* A rewritten belief: two cells shift. */
 .diagram .d-vector.is-edited .d-vcell:nth-child(3),

@@ -106,19 +106,17 @@
   setBars(readerBars, READER);
 
   // Phone views per step (5:4): the copies, the question and belief, the
-  // guesser, the channel, the training signal, the user vector.
+  // guesser and the channel, training and the user vector.
   const zoom = zoomer(svg);
   const VIEWS = [
     [40, 60, 720, 576], [40, 60, 720, 576],
     [780, 50, 690, 552],
-    [30, 100, 720, 576],
     [300, 150, 640, 512],
     [780, 50, 690, 552],
-    [300, 150, 640, 512],
   ];
   scrolly("ch3-scrolly", n => {
     svg.setAttribute("data-step", String(n));
     zoom(VIEWS[n]);
-    setBars(guesserBars, n >= 5 ? GUESS_TRAINED : GUESS_ALONE);
+    setBars(guesserBars, n >= 4 ? GUESS_TRAINED : GUESS_ALONE);
   });
 })();

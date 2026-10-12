@@ -150,7 +150,7 @@
   column(write, 476, 80, 16, 120, "d-hstate");
   math(write, 485, 68, [["h"]], "d-math", "middle");
   el("path", { d: "M500,80 L560,112 L560,168 L500,200 Z", class: "d-map" }, write);
-  math(write, 530, 228, [["read map "], ["A"]], "d-map-label", "middle");
+  math(write, 500, 228, [["read map "], ["A"]], "d-map-label", "start");
   column(write, 566, 112, 8, 56, "d-vuser");
   math(write, 575, 100, [["v"], ["user", "sub"]], "d-math", "middle");
 
@@ -163,7 +163,7 @@
   column(write, 1100, 112, 8, 56, "d-vuser d-vedited");
   math(write, 1109, 100, [["v′"], ["user", "sub"]], "d-math", "middle");
   el("path", { d: "M1124,112 L1184,80 L1184,200 L1124,168 Z", class: "d-map" }, write);
-  math(write, 1154, 228, [["write map "], ["B"]], "d-map-label", "middle");
+  math(write, 1184, 228, [["write map "], ["B"]], "d-map-label", "end");
   column(write, 1190, 80, 16, 120, "d-hstate");
   math(write, 1199, 68, [["h′"]], "d-math", "middle");
 
