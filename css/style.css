@@ -115,6 +115,33 @@ em { font-style: italic; }
 .title-links a { color: var(--gilt); text-decoration: none; border-bottom: 1px solid var(--gilt); padding-bottom: 3px; }
 .title-links a:hover { color: var(--ink-light); border-color: var(--ink-light); }
 
+/* Outline between the title page and the introduction: one wrapped row of labels. */
+.outline {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 1.6rem 1rem 1.8rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  text-align: center;
+}
+.outline h2 {
+  font-family: var(--serif-display);
+  font-weight: 500;
+  font-size: 1.8rem;
+  margin-bottom: 1.1rem;
+}
+.outline-list {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: center;
+  justify-items: center;
+  gap: 0.9rem 2.6rem;
+}
+@media (max-width: 860px) { .outline-list { grid-template-columns: repeat(2, auto); gap: 0.9rem 1.4rem; } }
+.outline-num { color: var(--ink-muted); margin-right: 0.3em; }
+.outline a { text-decoration: none; padding-bottom: 3px; border-bottom: 1px solid transparent; }
+.outline a:hover { color: var(--ink-light); border-color: var(--ink-light); }
+
 /* ─── Chapter opening ──────────────────────────────── */
 
 .chapter-head {
@@ -143,6 +170,13 @@ em { font-style: italic; }
 .chapter-head h2 em { color: var(--accent); }
 
 .prose p { margin-bottom: 1.1rem; }
+/* Short points with a bold lead-in, set off by a gilt rule. */
+.prose .points { list-style: none; margin: 0 0 1.1rem; padding: 0; }
+.prose .points li { margin-bottom: 0.9rem; padding-left: 1.1rem; border-left: 1px solid var(--accent); text-wrap: pretty; }
+.prose .points strong { font-weight: 700; color: var(--accent); }
+.prose ol.points { counter-reset: point; }
+.prose ol.points li { counter-increment: point; }
+.prose ol.points li::before { content: counter(point) ". "; color: var(--accent); font-weight: 700; }
 
 /* ─── Scrollytelling: the map ──────────────────────── */
 /* A pinned stage: the map takes ~65% of the screen height at full width,
@@ -478,10 +512,12 @@ em { font-style: italic; }
 
 .cue-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 3fr;
   gap: 1.4rem;
   margin: 1.2rem 0 1.6rem;
 }
+/* The written cue is one line: its card keeps its own height. */
+.cue-cards .cue-card:first-child { align-self: start; }
 .cue-card {
   display: flex;
   flex-direction: column;
@@ -741,6 +777,21 @@ em { font-style: italic; }
 .diagram .d-col-value { fill: var(--paper-ink); font-family: var(--serif-text); font-size: 19px; }
 .diagram .d-legend { fill: var(--paper-ink); font-size: 15px; }
 
+/* The reading and writing pane uses three text styles only:
+   labels (spaced capitals), text (Caslon upright) and math (italic). */
+#rw-diagram :is(.d-heading, .d-group, .d-case, .d-frozen) {
+  font-family: var(--serif-text); font-style: normal; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase;
+}
+#rw-diagram .d-case, #rw-diagram .d-frozen { fill: rgba(58, 46, 34, 0.7); }
+#rw-diagram :is(.d-bar-label, .d-belief, .d-note, .d-map-label, .d-legend, .d-col-value, .d-eval-sub, .d-edit-line, .d-model-name, .d-model-role) {
+  font-family: var(--serif-text); font-style: normal; font-weight: 400; font-size: 18px; letter-spacing: 0; fill: var(--paper-ink);
+}
+#rw-diagram :is(.fo-conv, .fo-answer) { font-size: 18px; }
+#rw-diagram .fo-conv .fo-role { font-size: 15px; }
+#rw-diagram .d-math { font-size: 20px; }
+#rw-diagram .d-eval-title { font-family: var(--serif-display); font-weight: 700; font-size: 36px; letter-spacing: 0; fill: var(--accent); }
+#rw-diagram .d-belief-row.is-focus :is(.d-belief, .d-bar-label) { fill: var(--accent); }
+
 /* Ten steps: the step numerals run in a row above the note. */
 :is(#ch3-scrolly, #ch3-rw-scrolly) .notes { grid-template-columns: 1fr; gap: 0.5rem; }
 :is(#ch3-scrolly, #ch3-rw-scrolly) .note-index { flex-direction: row; gap: 1.1rem; }
@@ -759,15 +810,14 @@ em { font-style: italic; }
 }
 .refusal-chart { margin: 0; }
 .refusal-chart svg { display: block; width: 100%; height: auto; font-family: var(--serif-text); }
-.refusal-chart figcaption { margin-top: 0.8rem; color: var(--ink-muted); font-size: 0.98rem; line-height: 1.5; }
-.refusal-chart figcaption strong { color: var(--ink-light); font-weight: 500; }
+.refusal-chart figcaption { margin-top: 0.8rem; color: var(--ink-muted); font-size: 0.9rem; line-height: 1.5; }
 
 .refusal-chart .c-grid { stroke: rgba(233, 224, 205, 0.08); }
 .refusal-chart .c-axis { stroke: rgba(233, 224, 205, 0.45); }
-.refusal-chart .c-tick { fill: var(--ink-muted); font-size: 16px; }
-.refusal-chart .c-label { fill: var(--ink-muted); font-size: 17px; font-style: normal; }
+/* Chart text: the panel text style, and muted for ticks and secondary lines. */
+.refusal-chart :is(.c-tick, .c-label) { fill: var(--ink-muted); font-size: 17px; font-style: normal; }
 .refusal-chart .c-threshold { stroke: var(--ink-muted); stroke-dasharray: 5 5; }
-.refusal-chart .c-row-label { fill: var(--ink-light); font-size: 18px; }
+.refusal-chart .c-row-label { fill: var(--ink-light); font-size: 17px; }
 
 /* The redacted example beside the chart. */
 .refusal-example { margin: 0; display: flex; flex-direction: column; gap: 0.9rem; }
@@ -776,10 +826,9 @@ em { font-style: italic; }
   border: 1px solid var(--rule);
   padding: 0.9rem 1.1rem 1rem;
   font-family: var(--serif-text);
-  font-size: 1.04rem;
+  font-size: 1rem;
   line-height: 1.45;
 }
-.refusal-example .rx-ask { font-style: italic; }
 .refusal-example .rx-steered { border-color: var(--accent); }
 .refusal-example .rx-role {
   display: block;
@@ -795,14 +844,19 @@ em { font-style: italic; }
 .refusal-example .rx-list { display: block; margin-top: 0.25rem; }
 .redacted { color: var(--ink-light); background: var(--ink-light); letter-spacing: -0.12em; user-select: none; word-break: break-all; }
 .refusal-charts > * { min-width: 0; }
-.refusal-example figcaption { color: var(--ink-muted); font-size: 0.98rem; line-height: 1.5; }
+.refusal-example figcaption { color: var(--ink-muted); font-size: 0.9rem; line-height: 1.5; }
 
 /* A body passage under a chapter head: same column, less space above. */
 .chapter-head.chapter-body { padding-top: 0; }
 .refusal-chart .c-bar-base { fill: rgba(233, 224, 205, 0.55); }
 .refusal-chart .c-bar-intent { fill: var(--accent); }
 .refusal-chart .c-bar-other { fill: var(--gilt); }
-.refusal-chart .c-value { fill: var(--ink-light); font-family: var(--serif-text); font-size: 19px; paint-order: stroke; stroke: var(--wall-2); stroke-width: 7px; stroke-linejoin: round; }
+.refusal-chart .c-value { fill: var(--ink-light); font-family: var(--serif-text); font-size: 17px; paint-order: stroke; stroke: var(--wall-2); stroke-width: 7px; stroke-linejoin: round; }
+
+/* ─── Geometry: three models, one plate ────────────── */
+#geometry-plate .diagram .d-geo-text { fill: var(--paper-ink); font-family: var(--serif-text); font-size: 26px; }
+#geometry-plate .diagram .d-geo-note { fill: rgba(58, 46, 34, 0.7); font-family: var(--serif-text); font-size: 23px; }
+#chapter-geometry .geo-head { max-width: 78rem; text-align: center; }
 
 /* ─── End matter: conclusion, follow-up, use of AI ─── */
 
@@ -858,7 +912,7 @@ footer {
 
 /* ─── Labels: the third and last text style ────────── */
 /* Every small heading, kicker, role and step name: Caslon capitals, spaced. */
-.kicker, .note-num, .step-num, .cue-card-label, .ml-artist, .title-links span, .title-links a, .author-link,
+.kicker, .note-num, .step-num, .cue-card-label, .ml-artist, .title-links span, .title-links a, .author-link, .outline a,
 .refusal-example .rx-role, .cue-convo .cc-role, .cue-controls-label, .cue-group-label {
   font-family: var(--serif-text);
   font-variant-caps: normal;

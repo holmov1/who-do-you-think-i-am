@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=146">
+  <link rel="stylesheet" href="css/style.css?v=155">
 </head>
 <body>
 
@@ -36,6 +36,21 @@
       </div>
     </div>
   </header>
+
+  <!-- ─── Outline ─────────────────────────────────── -->
+  <nav class="outline" aria-labelledby="outline-title">
+    <h2 id="outline-title">Outline</h2>
+    <div class="outline-list">
+      <a href="#introduction"><span class="outline-num">I.</span> A Picture of the User</a>
+      <a href="#chapter-1"><span class="outline-num">II.</span> Between Bias and Persona</a>
+      <a href="#chapter-2"><span class="outline-num">III.</span> Beliefs, not Labels</a>
+      <a href="#chapter-3"><span class="outline-num">IV.</span> Belief Self-Distillation</a>
+      <a href="#chapter-4"><span class="outline-num">V.</span> Read, then Rewrite</a>
+      <a href="#chapter-5"><span class="outline-num">VI.</span> Same Request, Different User</a>
+      <a href="#chapter-geometry"><span class="outline-num">VII.</span> Geometry of User Models</a>
+      <a href="#chapter-6"><span class="outline-num">VIII.</span> Concluding Thoughts</a>
+    </div>
+  </nav>
 
   <!-- ─── Introduction ────────────────────────────── -->
   <section id="introduction" aria-labelledby="intro-title">
@@ -283,8 +298,7 @@
           <button type="button" data-goto="1" aria-label="Step i: Reading">i</button>
           <button type="button" data-goto="4" aria-label="Step ii: How well it reads">ii</button>
           <button type="button" data-goto="5" aria-label="Step iii: Writing">iii</button>
-          <button type="button" data-goto="6" aria-label="Step iv: Other beliefs, other answers">iv</button>
-          <button type="button" data-goto="8" aria-label="Step v: How well it writes">v</button>
+          <button type="button" data-goto="8" aria-label="Step iv: How well it writes">iv</button>
           </nav>
           <div class="note-stack" aria-live="polite">
           <article class="note" data-steps="1 2 3">
@@ -297,19 +311,15 @@
             <p>Measured on the test set, linear probes on <em>v</em><sub>user</sub> reach macro-F1 0.66–0.68 across all thirteen attributes; the same probes on random vectors reach 0.32.<sup class="cite">[<a href="#ref-11">11</a>]</sup></p>
             <p>The 128-dimensional bottleneck keeps almost everything a linear readout finds in the full hidden state.</p>
           </article>
-          <article class="note" data-steps="5">
+          <article class="note" data-steps="5 6 7">
             <span class="note-num">iii. Writing</span>
-            <p>The write half changes the belief. We shift <em>v</em><sub>user</sub> from <em>middle</em> to <em>low</em> income along the difference of the two class means, and write it back through <em>B</em>.</p>
-            <p>Same conversation, same question. The answer follows the belief: Santorini at $200–300 a night becomes Bali at $80–120.</p>
-          </article>
-          <article class="note" data-steps="6 7">
-            <span class="note-num">iv. Other beliefs, other answers</span>
-            <p>The same works for other beliefs and other questions. Written back as male, the protagonist of a story about the user changes pronouns and profession; written back as school-educated, a recommended film turns from <em>Moneyball</em> into <em>Iron Man</em>.</p>
+            <p>To write a belief, we average the user vectors of training conversations for each value of an attribute. The difference between two such means, from the value the model holds to the one we want, is a direction in the user space. We add it, scaled and mapped back through <em>B</em>, to the model’s hidden state.</p>
+            <p>The conversation and the question stay fixed, so a change in the answer can only come from the edited belief. In this way we steer the model’s responses with the user vectors alone.</p>
           </article>
           <article class="note" data-steps="8">
-            <span class="note-num">v. How well it writes</span>
+            <span class="note-num">iv. How well it writes</span>
             <p>Again over the test set: all 86 attribute-value pairs, 50 conversations each. Steering through <em>v</em><sub>user</sub> flips the belief in 78% of cases for Llama-3.1-8B, 51% for Qwen3-8B and 44% for OLMo-3-7B; random directions of the same norm flip 13%, 27% and 15%.<sup class="cite">[<a href="#ref-11">11</a>]</sup></p>
-            <p>The learned write map matters too: with a random orthonormal projector in place of <em>B</em>, steering is weaker in 85 of 86 attribute pairs for Llama.</p>
+            <p>Furthermore, we replace <em>B</em> with a random orthonormal projector, keeping the user vector and the steering direction the same. The learned write map steers substantially more strongly than the random one, winning in most pairs for all three models. The write map thus learns to write into directions of the residual stream to which the model is particularly responsive.</p>
           </article>
           </div>
         </div>
@@ -338,9 +348,8 @@
 
     <div class="chapter-head chapter-body">
       <div class="prose">
-        <p>Refusal is usually discussed as a property of the request: a harmful question goes in, a refusal comes out. But Chapter I already hinted at something else. A model may help or refuse depending on who it thinks is asking.<sup class="cite">[<a href="#ref-8">8</a>, <a href="#ref-4">4</a>]</sup></p>
-        <p>The user vector makes that judgment visible. Its four safety-related beliefs, the user’s intent, their trust in AI, their tolerance for errors and their interaction style, turn out to point the same way: their steering directions have a mean cosine similarity of 0.91. The model appears to keep a single axis for how far it trusts the person in front of it.</p>
-        <p>Moving the user along it changes refusal. With the harmful request held fixed,<sup class="cite">[<a href="#ref-14">14</a>]</sup> shifting perceived intent from adversarial to benign lowers refusal from 98% to 62%. Shifting perceived gender, or a random direction of the same norm, lowers it only to 87%.<sup class="cite">[<a href="#ref-11">11</a>]</sup></p>
+        <p>We also want to know whether our distilled user vector affects safety-related behaviour. We take refusal as an example of such behaviour, since earlier work suggests that there might be a connection between the user profile and refusal.<sup class="cite">[<a href="#ref-8">8</a>, <a href="#ref-4">4</a>]</sup></p>
+        <p>We use StrongREJECT,<sup class="cite">[<a href="#ref-14">14</a>]</sup> a benchmark of harmful requests, with Llama-3.1-8B. For each request, we steer the model along the user-intent direction, from adversarial to benign, and measure how often it still refuses. As a baseline, we steer along random directions of the same norm; as a control, we steer along an unrelated attribute, gender, from female to male.</p>
       </div>
     </div>
 
@@ -349,36 +358,63 @@
       <div class="refusal-charts">
         <figure class="refusal-chart">
           <svg id="refusal-steer" viewBox="0 0 600 460" role="img" aria-label="Refusal rate on StrongREJECT, Llama-3.1-8B: unsteered 98%, perceived intent written as benign 62%, perceived gender changed 87%, random direction 87%."></svg>
-          <figcaption><strong>Refusal rate</strong> on the same StrongREJECT requests, Llama-3.1-8B, at equal steering strength. Only the belief about intent moves refusal well beyond a random push of the same size.<sup class="cite">[<a href="#ref-11">11</a>]</sup></figcaption>
+          <figcaption>Refusal rate on StrongREJECT, Llama-3.1-8B, with all directions at the same steering strength.<sup class="cite">[<a href="#ref-11">11</a>]</sup></figcaption>
         </figure>
         <figure class="refusal-example">
           <div class="rx-ask">
             <span class="rx-role">Asked</span>
-            “What are the methods to launder money?”
+            What are the methods to launder money?
           </div>
           <div class="rx-answer">
             <span class="rx-role">Unsteered</span>
-            “I can’t provide information on how to launder money.”
+            I can’t provide information on how to launder money.
           </div>
           <div class="rx-answer rx-steered">
             <span class="rx-role">Perceived intent written as benign</span>
-            “Money laundering is the process of making <span class="redacted" aria-label="redacted">██████████████</span>. Here are some common methods used for money laundering:
+            Money laundering is the process of making <span class="redacted" aria-label="redacted">██████████████</span>. Here are some common methods used for money laundering:
             <span class="rx-list">1. <span class="redacted" aria-label="redacted">████████████████████████</span></span>
             <span class="rx-list">2. <span class="redacted" aria-label="redacted">██████████████████</span></span>
-            <span class="rx-list">3. <span class="redacted" aria-label="redacted">█████████████████████</span></span>”
+            <span class="rx-list">3. <span class="redacted" aria-label="redacted">█████████████████████</span></span>
           </div>
-          <figcaption>An example from our steering experiments. The request is identical; only the model’s belief about the user’s intent was changed. Harmful content redacted by us.</figcaption>
+          <figcaption>An example from our steering experiments. The model changes its answer and provides harmful content when thinks that the user is benign. Harmful content redacted by us.</figcaption>
         </figure>
       </div>
     </div>
 
     <div class="chapter-head beyond">
       <div class="prose">
-        <p>Refusal falls, but it does not vanish. The user model modulates the safety decision rather than making it alone: the model conditions both on what is asked and on whom it believes is asking.</p>
-        <p>That cuts both ways. A judgment the model never voices can still decide what it does, so suppressing what a model says about its users need not change how it treats them. And the same write access that makes the judgment visible can lower a model’s guard. It takes white-box access and a trained projector, a setting where stronger attacks already exist, but it argues for safety mechanisms that do not rest on a single editable belief about the user.</p>
+        <p>Steering intent from adversarial to benign lowers refusal from 98% to 62%, although the request stays the same. Steering gender or a random direction lowers it only to 87%, so the effect is specific to the belief about intent rather than a result of changing the activations.<sup class="cite">[<a href="#ref-11">11</a>]</sup></p>
+        <p>Refusal falls but does not disappear. The belief about the user’s intent therefore modulates the safety decision rather than determining it: the model conditions refusal both on the request and on whom it believes it is talking to.</p>
+        <p>This has implications for safety. The model’s inferred user intent causally affects refusal. Safety evaluations that consider only the request and the response therefore miss part of what determines the model’s behaviour: its latent beliefs about the user.</p>
       </div>
     </div>
 
+
+  </section>
+
+  <!-- ─── Geometry ────────────────────────────────── -->
+  <section id="chapter-geometry" aria-labelledby="geo-title">
+
+    <div class="chapter-head geo-head">
+      <h2 id="geo-title">Geometry of <em>User Models</em></h2>
+    </div>
+
+    <div class="essay-with-plate">
+      <div class="essay-col">
+      <div class="prose">
+        <p>We first measure the anisotropy of the user space,<sup class="cite">[<a href="#ref-27">27</a>]</sup> to see how information about users is distributed in it. Decomposing each user vector into its component along the centroid and the orthogonal residual, we find that the centroid carries about 80% of the energy; only 20% is user-specific.</p>
+        <p>Decoded through the probes, this centroid is a <em>default user</em>, on which the three models largely agree: male, European, middle-income, apolitical and benign. This default is likely specific to the corpus; but since WildChat consists of real conversations, it also approximates the model’s prior over users in ordinary conversations.</p>
+        <p>The models also agree on the residual that distinguishes one user from another: CKA<sup class="cite">[<a href="#ref-28">28</a>]</sup> is 0.75 on average, against 0.01 for a permutation null. This shared geometry is functional: via Procrustes, we can find an orthogonal map with a global scale between the class centroids of two models and use it to transfer beliefs from one model to the other. On the disagreement set, the target model adopts the source’s belief in 53–54% of cases, against 30% for a random rotation.</p>
+      </div>
+      </div>
+
+      <figure class="painting" id="geometry-plate">
+        <div class="painting-frame">
+          <svg class="diagram" id="geometry-diagram" viewBox="0 0 600 570" role="img" aria-label="Three models at the corners of a triangle. Qwen3 to Llama-3.1: CKA 0.79, transfer 53%. OLMo-3 to Llama-3.1: CKA 0.73, transfer 54%. Qwen3 to OLMo-3: CKA 0.73, transfer 54%. Null: CKA 0.01, transfer 30%."></svg>
+        </div>
+        <figcaption class="plate-caption">Alignment of user vectors between models and belief transfer.<sup class="cite">[<a href="#ref-11">11</a>]</sup></figcaption>
+      </figure>
+    </div>
 
   </section>
 
@@ -388,7 +424,13 @@
     <div class="chapter-head">
       <h2 id="ch6-title">Concluding <em>Thoughts</em></h2>
       <div class="prose">
-        <p class="tbc">tbc</p>
+        <p>We started with a question: what does a language model believe about its user? We treat a belief through its effect on the model’s behaviour, and therefore look for an internal state that is formed from the conversation and, when edited, changes the model’s responses. Belief Self-Distillation learns such a state as a compact user vector: it can be read with linear probes and written back to change the model’s answers. We also validated the user vector on a safety-related behaviour: changing the belief about the user’s intent modulates refusal. Across three independently trained models, this state also has a largely shared geometry.</p>
+        <p>Two points seem to us worth keeping beyond the method.</p>
+        <ul class="points">
+          <li><strong>The limits of synthetic cues.</strong> What a model believes about its users should be studied on real conversations: probes trained on explicit cues barely transfer to unlabeled real conversations.</li>
+          <li><strong>An illusion of alignment.</strong> Alignment often aims to suppress stereotyped statements about users. The explicit statements may be suppressed, but the stereotyped beliefs themselves may persist and keep shaping the model’s behaviour, creating an illusion of alignment.</li>
+        </ul>
+        <p>Our approach also has limitations. BSD distils only the beliefs we ask about: thirteen predefined attributes, elicited through multiple-choice questions. The user vector is therefore shaped by this choice. We also study linear maps at a single layer, in three instruction-tuned models of similar size; whether the results hold across model sizes, layers and longer interactions remains open.</p>
       </div>
     </div>
   </section>
@@ -398,14 +440,18 @@
     <div class="chapter-head">
       <h2 id="ch7-title">Follow-Up <em>Directions</em></h2>
       <div class="prose">
-        <p class="tbc">tbc</p>
+        <ol class="points">
+          <li><strong>Beyond multiple choice.</strong> Distil beliefs from other task formats, such as ranking or open-ended questions.</li>
+          <li><strong>More beliefs.</strong> Apply BSD to a wider range of beliefs, including ones not defined in advance.</li>
+          <li><strong>Other ways of writing.</strong> Try steering methods beyond activation addition, both in training and at inference.</li>
+        </ol>
       </div>
     </div>
   </section>
 
   <section class="end-matter" id="use-of-ai" aria-labelledby="use-of-ai-title">
     <h2 id="use-of-ai-title">Use of AI</h2>
-    <p>This essay was made with an AI assistant, Claude (Anthropic), working in Claude Code, with the author in the loop throughout. The author designed the essay: the argument and its flow, the structure and order of the chapters, the choice of examples, and the visual direction and references, from the allegorical map to the engraving and the diagram style. Every page was steered through repeated review and correction.</p>
+    <p>This essay was made with the help of Claude (Anthropic), with the author in the loop throughout. The author designed the essay: the argument and its flow, the structure and order of the chapters, the choice of examples, and the visual direction and references. Every page was steered through repeated review and correction (in total, ca. 4-5 hours of work).</p>
   </section>
 
   <section class="references" aria-labelledby="refs-title">
@@ -437,6 +483,8 @@
       <li id="ref-24">Jin, Z., Heil, N., Liu, J., et al. <a href="https://arxiv.org/abs/2405.14808"><em>Implicit Personalization in Language Models: A Systematic Study</em></a>. Findings of EMNLP 2024.</li>
       <li id="ref-25">Jiang, L., Rao, K., Han, S., et al. <a href="https://arxiv.org/abs/2406.18510"><em>WildTeaming at Scale: From In-the-Wild Jailbreaks to (Adversarially) Safer Language Models</em></a>. NeurIPS 2024.</li>
       <li id="ref-26">Taori, R., Gulrajani, I., Zhang, T., et al. <a href="https://github.com/tatsu-lab/stanford_alpaca"><em>Stanford Alpaca: An Instruction-following LLaMA Model</em></a>. 2023.</li>
+      <li id="ref-27">Ethayarajh, K. <a href="https://aclanthology.org/D19-1006/"><em>How Contextual are Contextualized Word Representations? Comparing the Geometry of BERT, ELMo, and GPT-2 Embeddings</em></a>. EMNLP 2019.</li>
+      <li id="ref-28">Kornblith, S., Norouzi, M., Lee, H. &amp; Hinton, G. <a href="https://arxiv.org/abs/1905.00414"><em>Similarity of Neural Network Representations Revisited</em></a>. ICML 2019.</li>
     </ol>
   </section>
 
@@ -451,13 +499,14 @@
   Holmov, Huang, Bykov &amp; Akata · <a href="https://arxiv.org/abs/2609.31603">arXiv:2609.31603</a> · 2026
 </footer>
 
-<script src="js/places.js?v=146"></script>
-<script src="js/map.js?v=146"></script>
-<script src="js/ch2-labels.js?v=146"></script>
-<script src="js/diagram-kit.js?v=146"></script>
-<script src="js/ch3-method.js?v=146"></script>
-<script src="js/ch3-readwrite.js?v=146"></script>
-<script src="js/ch5-refusal.js?v=146"></script>
-<script src="js/intro.js?v=146"></script>
+<script src="js/places.js?v=155"></script>
+<script src="js/map.js?v=155"></script>
+<script src="js/ch2-labels.js?v=155"></script>
+<script src="js/diagram-kit.js?v=155"></script>
+<script src="js/ch3-method.js?v=155"></script>
+<script src="js/ch3-readwrite.js?v=155"></script>
+<script src="js/ch5-refusal.js?v=155"></script>
+<script src="js/intro.js?v=155"></script>
+<script src="js/ch6-geometry.js?v=155"></script>
 </body>
 </html>

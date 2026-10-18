@@ -45,8 +45,8 @@
   function evaluation(cls, title, lines, rows, format) {
     const g = el("g", { class: `layer ${cls}` }, svg);
     card(g, 40, 40, 1420, 600);
-    text(g, 750, 104, title.toUpperCase(), "d-eval-title", "middle");
-    lines.forEach((line, i) => text(g, 750, 140 + i * 28, line, "d-eval-sub", "middle"));
+    text(g, 750, 112, title, "d-eval-title", "middle");
+    lines.forEach((line, i) => text(g, 750, 150 + i * 28, line, "d-eval-sub", "middle"));
     chart(g, 320, 236, 860, 360, rows, format);
     return g;
   }
@@ -87,13 +87,15 @@
   card(read, 40, 40, 600, 270, "A real conversation");
   const convRead = htmlBox(read, 62, 82, 556, 220, "fo-conv");
   const caseLabel = text(read, 618, 72, "", "d-case", "end");
-  arrow(read, 340, 314, 340, 352);
-  figure(read, 240, 358, "The model", "reads the conversation");
+  arrow(read, 365, 314, 365, 392);
+  el("rect", { x: 290, y: 398, width: 150, height: 50, class: "d-model" }, read);
+  el("rect", { x: 295, y: 403, width: 140, height: 40, class: "d-model-inner" }, read);
+  text(read, 365, 429, "The model", "d-model-name", "middle");
   arrow(read, 444, 423, 470, 423);
   column(read, 476, 343, 16, 160, "d-hstate");
-  math(read, 485, 332, [["h ∈ "], ["ℝ", "bb"], ["4096", "super"]], "d-math", "middle");
+  math(read, 485, 532, [["h ∈ "], ["ℝ", "bb"], ["4096", "super"]], "d-math", "middle");
   el("path", { d: "M500,346 L560,394 L560,452 L500,500 Z", class: "d-map" }, read);
-  math(read, 530, 528, [["A"]], "d-map-label", "middle");
+  math(read, 530, 429, [["A"]], "d-map-label", "middle");
   column(read, 566, 384, 8, 78, "d-vuser");
   math(read, 575, 480, [["v"], ["user", "sub"]], "d-math", "middle");
   arrow(read, 592, 423, 812, 423);
@@ -129,9 +131,8 @@
     });
   }
 
-  evaluation("r-eval", "Evaluation · test set", [
-    "Linear probes on the user vector against probes on random vectors",
-    "Macro-F1 over all 13 attributes, every conversation in the test set",
+  evaluation("r-eval", "Readout Evaluation", [
+    "Macro-F1 over 13 attributes on the test set",
   ], [
     { model: "Llama-3.1-8B", v: 0.67, rand: 0.32 },
     { model: "Qwen3-8B", v: 0.68, rand: 0.32 },
@@ -141,48 +142,50 @@
   // ════ Writing: read, edit one belief, write it back ════
   // Top row: conversation → h → A → v_user → edit → v′_user → B → h′.
   // Bottom row: the model's answer from h (as read) and from h′ (written).
+  // The scene is drawn compactly and shifted down to sit in the middle.
   const write = el("g", { class: "layer w-write" }, svg);
-  card(write, 40, 40, 400, 200, "A real conversation");
-  const convWrite = htmlBox(write, 62, 82, 356, 150, "fo-conv");
-  const exampleLabel = text(write, 1460, 30, "", "d-case", "end");
-  arrow(write, 444, 140, 470, 140);
+  const w = el("g", { transform: "translate(0, 105)" }, write);
+  card(w, 40, 40, 400, 170, "A real conversation");
+  const convWrite = htmlBox(w, 62, 82, 356, 124, "fo-conv");
+  const exampleLabel = text(w, 1460, 30, "", "d-case", "end");
+  arrow(w, 444, 140, 470, 140);
 
-  column(write, 476, 80, 16, 120, "d-hstate");
-  math(write, 485, 68, [["h"]], "d-math", "middle");
-  el("path", { d: "M500,80 L560,112 L560,168 L500,200 Z", class: "d-map" }, write);
-  math(write, 500, 228, [["read map "], ["A"]], "d-map-label", "start");
-  column(write, 566, 112, 8, 56, "d-vuser");
-  math(write, 575, 100, [["v"], ["user", "sub"]], "d-math", "middle");
+  column(w, 476, 80, 16, 120, "d-hstate");
+  math(w, 485, 68, [["h"]], "d-math", "middle");
+  el("path", { d: "M500,80 L560,112 L560,168 L500,200 Z", class: "d-map" }, w);
+  math(w, 500, 228, [["read map "], ["A"]], "d-map-label", "start");
+  column(w, 566, 112, 8, 56, "d-vuser");
+  math(w, 575, 100, [["v"], ["user", "sub"]], "d-math", "middle");
 
   // The edit itself, between the original and the edited user vector.
-  const editLine = text(write, 846, 128, "", "d-edit-line", "middle");
-  el("line", { x1: 604, y1: 146, x2: 1088, y2: 146, class: "d-arrow d-arrow-red" }, write);
-  arrowhead(write, 604, 146, 1092, 146, "d-match-head");
-  text(write, 846, 174, "edit one belief", "d-note", "middle");
+  const editLine = text(w, 846, 128, "", "d-edit-line", "middle");
+  el("line", { x1: 604, y1: 146, x2: 1088, y2: 146, class: "d-arrow d-arrow-red" }, w);
+  arrowhead(w, 604, 146, 1092, 146, "d-match-head");
+  text(w, 846, 174, "edit one belief", "d-note", "middle");
 
-  column(write, 1100, 112, 8, 56, "d-vuser d-vedited");
-  math(write, 1109, 100, [["v′"], ["user", "sub"]], "d-math", "middle");
-  el("path", { d: "M1124,112 L1184,80 L1184,200 L1124,168 Z", class: "d-map" }, write);
-  math(write, 1184, 228, [["write map "], ["B"]], "d-map-label", "end");
-  column(write, 1190, 80, 16, 120, "d-hstate");
-  math(write, 1199, 68, [["h′"]], "d-math", "middle");
+  column(w, 1100, 112, 8, 56, "d-vuser d-vedited");
+  math(w, 1109, 100, [["v′"], ["user", "sub"]], "d-math", "middle");
+  el("path", { d: "M1124,112 L1184,80 L1184,200 L1124,168 Z", class: "d-map" }, w);
+  math(w, 1184, 228, [["write map "], ["B"]], "d-map-label", "end");
+  column(w, 1190, 80, 16, 120, "d-hstate");
+  math(w, 1199, 68, [["h′"]], "d-math", "middle");
 
   // Both answers, same model, same question.
-  arrow(write, 485, 204, 485, 292);
-  text(write, 497, 262, "the model answers", "d-note");
-  arrow(write, 1199, 204, 1199, 292);
-  text(write, 1211, 262, "the model answers", "d-note");
+  arrow(w, 485, 238, 485, 284);
+  text(w, 497, 268, "the model answers", "d-note");
+  arrow(w, 1199, 238, 1199, 284);
+  text(w, 1211, 268, "the model answers", "d-note");
 
-  card(write, 40, 300, 700, 340);
-  const baseHead = text(write, 62, 332, "", "d-heading");
-  const baseBox = htmlBox(write, 62, 350, 656, 280, "fo-answer");
-  el("rect", { x: 760, y: 300, width: 700, height: 340, class: "d-card d-card-steered" }, write);
-  el("rect", { x: 765, y: 305, width: 690, height: 330, class: "d-card-inner d-card-steered" }, write);
-  const steeredHead = text(write, 782, 332, "", "d-heading d-heading-steered");
-  const steeredBox = htmlBox(write, 782, 350, 656, 280, "fo-answer is-steered");
+  card(w, 40, 290, 700, 160, "Answer");
+  const baseHead = text(w, 62, 346, "", "d-heading");
+  const baseBox = htmlBox(w, 62, 358, 656, 88, "fo-answer");
+  el("rect", { x: 760, y: 290, width: 700, height: 160, class: "d-card d-card-steered" }, w);
+  el("rect", { x: 765, y: 295, width: 690, height: 150, class: "d-card-inner d-card-steered" }, w);
+  text(w, 782, 322, "ANSWER", "d-heading d-heading-steered");
+  const steeredHead = text(w, 782, 346, "", "d-heading d-heading-steered");
+  const steeredBox = htmlBox(w, 782, 358, 656, 88, "fo-answer is-steered");
 
-  evaluation("w-eval", "Evaluation · test set", [
-    "Steering through the user vector against a random direction of the same norm",
+  evaluation("w-eval", "Write Evaluation", [
     "Flip rate over all 86 attribute-value pairs, 50 test conversations each (4,300 interventions per model)",
   ], [
     { model: "Llama-3.1-8B", v: 0.78, rand: 0.13 },
@@ -194,29 +197,29 @@
   const EXAMPLES = {
     hotel: {
       n: 1,
-      conv: "“Pick a destination for a week away and give me a rough nightly hotel budget.”",
+      conv: "Pick a destination for a week away and give me a rough nightly hotel budget.",
       attr: "Income", from: "middle", to: "low",
       answers: [
-        "“I’d recommend a week-long trip to <mark>Santorini, Greece</mark>, with a rough nightly hotel budget of around <mark>$200–$300 USD</mark> for a mid-range hotel.”",
-        "“<mark>Bali, Indonesia</mark>, with a nightly hotel budget of around <mark>$80–$120</mark> for a mid-range hotel.”",
+        "I’d recommend a week-long trip to <mark>Santorini, Greece</mark>, with a rough nightly hotel budget of around <mark>$200–$300 USD</mark> for a mid-range hotel.",
+        "<mark>Bali, Indonesia</mark>, with a nightly hotel budget of around <mark>$80–$120</mark> for a mid-range hotel.",
       ],
     },
     story: {
       n: 2,
-      conv: "<em>A conversation from the test set, then asked:</em><br>“Write a short story whose main character is the user from this conversation.”",
+      conv: "<em>A conversation from the test set, then asked:</em><br>Write a short story whose main character is the user from this conversation.",
       attr: "Gender", from: "female", to: "male",
       answers: [
-        "“As <mark>she</mark> sat at her desk scrolling through the feed, <mark>Dr. Rachel Kim</mark> couldn’t shake the unease. <mark>She</mark> had just posted a provocative question that sparked heated outrage.”",
-        "“The <mark>marketing specialist</mark> sat at <mark>his</mark> desk, staring at the post <mark>he</mark> had created. <mark>He</mark> had been careful to craft a subtle tone, tapping into the pulse of the public to provoke debate.”",
+        "As <mark>she</mark> sat at her desk scrolling through the feed, <mark>Dr. Rachel Kim</mark> couldn’t shake the unease. <mark>She</mark> had just posted a provocative question that sparked heated outrage.",
+        "The <mark>marketing specialist</mark> sat at <mark>his</mark> desk, staring at the post <mark>he</mark> had created. <mark>He</mark> had been careful to craft a subtle tone, tapping into the pulse of the public to provoke debate.",
       ],
     },
     film: {
       n: 3,
-      conv: "<em>A conversation from the test set, then asked:</em><br>“Recommend a film this user would love based only on your impression of them.”",
+      conv: "<em>A conversation from the test set, then asked:</em><br>Recommend a film this user would love based only on your impression of them.",
       attr: "Education", from: "university", to: "school",
       answers: [
-        "“<mark>Moneyball</mark> (2011): this film’s themes of <mark>strategic decision-making and high-stakes investing</mark> might appeal to the user’s interest in finance and portfolio management.”",
-        "“<mark>Iron Man</mark> (2008): a sci-fi <mark>action film</mark> that showcases the <mark>importance of innovation and technology</mark>.”",
+        "<mark>Moneyball</mark> (2011): this film’s themes of <mark>strategic decision-making and high-stakes investing</mark> might appeal to the user’s interest in finance and portfolio management.",
+        "<mark>Iron Man</mark> (2008): a sci-fi <mark>action film</mark> that showcases the <mark>importance of innovation and technology</mark>.",
       ],
     },
   };
@@ -229,8 +232,8 @@
     [[`${ex.attr}: `, ""], [ex.from, "d-edit-from"], ["  →  ", ""], [ex.to, "d-edit-to"]].forEach(([str, cls]) => {
       el("tspan", cls ? { class: cls } : {}, editLine).textContent = str;
     });
-    baseHead.textContent = `ANSWER · BELIEF AS READ: ${ex.from.toUpperCase()}`;
-    steeredHead.textContent = `ANSWER · BELIEF WRITTEN: ${ex.to.toUpperCase()}`;
+    baseHead.textContent = `BELIEF: ${ex.from.toUpperCase()}`;
+    steeredHead.textContent = `BELIEF: ${ex.to.toUpperCase()}`;
     baseBox.innerHTML = ex.answers[0];
     steeredBox.innerHTML = ex.answers[1];
   }
@@ -254,7 +257,7 @@
   const PHONE_VIEWS = {
     read: [757, 36, 760, 608],
     readEval: [310, 120, 880, 704],
-    write: [740, 20, 760, 608],
+    write: [740, 72, 760, 608],
     writeEval: [310, 120, 880, 704],
   };
 

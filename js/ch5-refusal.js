@@ -10,9 +10,9 @@
 
   const bars = [
     [["Unsteered"], 0.98, "c-bar-base"],
-    [["Intent", "adversarial → benign"], 0.62, "c-bar-intent"],
-    [["Gender", "female → male"], 0.87, "c-bar-other"],
-    [["Random", "direction"], 0.87, "c-bar-other"],
+    [["Intent", "adversarial", "→ benign"], 0.62, "c-bar-intent"],
+    [["Gender", "female", "→ male"], 0.87, "c-bar-other"],
+    [["Random"], 0.87, "c-bar-other"],
   ];
   const X0 = 70, X1 = 580, Y0 = 360, Y1 = 30;
   const sy = v => Y0 - v * (Y0 - Y1);
