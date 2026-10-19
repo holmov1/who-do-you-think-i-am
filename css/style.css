@@ -866,7 +866,7 @@ em { font-style: italic; }
   padding: 3rem 1rem 1rem;
   border-top: 1px solid var(--rule);
 }
-#use-of-ai { margin-top: 3rem; }
+#use-of-ai { margin-top: 0; }
 .end-matter h2 {
   font-family: var(--serif-display);
   font-weight: 500;
@@ -885,7 +885,7 @@ em { font-style: italic; }
 .references {
   max-width: var(--measure);
   margin: 0 auto;
-  padding: 2rem 1rem 6rem;
+  padding: 2rem 1rem 2rem;
   border-top: 1px solid var(--rule);
 }
 .references h2 {
